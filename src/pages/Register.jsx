@@ -11,11 +11,13 @@ const RegisterPage = () => {
     { type: 'text', placeholder: 'rosa-luxemburgo', label: 'URL personalizada', staticPrefix: 'goodmenu.com/' },
     { type: 'email', placeholder: 'cmuller@us.es', label: 'Correo electrónico' },
     { type: 'password', placeholder: 'Utilice una combinación de al menos 6 letras y números', label: 'Contraseña' },
+    { type: 'tel', placeholder: '666555333', label: 'Número de teléfono' },
+    { type: 'date', label: 'Fecha de nacimiento' },
   ];
 
   return (
-    <div className="flex flex-col items-center justify-start pt-20 h-screen bg-primary-green">
-      <div className="flex flex-col items-center justify-center py-4 px-32 bg-white rounded-lg">
+    <div className="flex flex-col items-center justify-start pt-20  bg-primary-green">
+      <div className="flex flex-col items-center justify-center py-4 mb-20 px-32 bg-white rounded-lg">
       <img src={logo} alt="Logo" className="w-36 h-36 mb-4" />
         <h1 className="text-3xl font-bold mb-4">Crea tu cuenta</h1>
         <h3 className="text-sm text-gray-500 mb-8">¿Ya tienes una cuenta? <Link to="/login" className="text-primary-green font-bold">Inicia sesión</Link></h3>
