@@ -1,10 +1,17 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
+
+// local imports
+import { fetchLogin } from "../api/endpoints";
 import Input from "../components/Input";
 import Button from "../components/Button";
 import logo from "../assets/logo-green.png";
-import { Link } from "react-router-dom";
+import { useAuthContext } from "../context/authContext";
 
 export default function LoginPage() {
+  // 0) instanciamos el contexto de autenticación
+  const { login } = useAuthContext();
+
   // 1) creamos estado inicial para el formulario
   const [form, setForm] = useState({
     email: "",
@@ -28,21 +35,11 @@ export default function LoginPage() {
   // 5) manejamos el envío del formulario
   async function onSubmit(e) {
     e.preventDefault();
-    const response = await fetch(
-      "https://tfg-api-rest-full.azurewebsites.net/auth/login",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(form),
-      }
-    );
-    const data = await response.json();
+    const { status, data } = await fetchLogin(form);
 
-    switch (response.status) {
+    switch (status) {
       case 200:
-        console.log(data.token);
+        login(data.token);
         break;
       case 400:
         setErrors(data.email || data.password || data.credentials);
