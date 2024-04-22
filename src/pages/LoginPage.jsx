@@ -6,7 +6,7 @@ import { fetchLogin } from "../api/endpoints";
 import Input from "../components/Input";
 import Button from "../components/Button";
 import logo from "../assets/logo-green.png";
-import { useAuthContext } from "../context/authContext";
+import { useAuthContext } from "../context/useAuthContext";
 
 export default function LoginPage() {
   // 0) instanciamos el contexto de autenticación
