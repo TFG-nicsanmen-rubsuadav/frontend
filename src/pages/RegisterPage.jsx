@@ -29,7 +29,7 @@ export default function RegisterPage() {
     },
   ];
   return (
-    <div className="flex flex-col items-center justify-start pt-20 h-screen bg-primary-green">
+    <div className="flex flex-col items-center justify-start pt-20 h-screen bg-primary-green overflow-auto pb-20">
       <div className="flex flex-col items-center justify-center py-4 px-32 bg-white rounded-lg">
         <img src={logo} alt="Logo" className="w-36 h-36 mb-4" />
         <h1 className="text-3xl font-bold mb-4">Crea tu cuenta</h1>

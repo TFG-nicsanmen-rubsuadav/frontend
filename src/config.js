@@ -1,1 +1,1 @@
-export const API_URL  = "https://tfg-api-rest-full.azurewebsites.net"
+export const API_URL  = "http://localhost:3000"
