@@ -39,10 +39,13 @@ export default function LoginPage() {
 
     switch (status) {
       case 200:
-        login(data.token);
+        login(data.token, data.userRole);
         break;
       case 400:
         setErrors(data.email || data.password || data.credentials);
+        break;
+      case 404:
+        setErrors(data.email);
         break;
     }
   }

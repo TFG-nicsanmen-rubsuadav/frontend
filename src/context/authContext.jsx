@@ -10,25 +10,28 @@ export function AuthContextProvider({ children }) {
   );
 
   // LOGICA DE ROLES
-  //   const [role, setRole] = useState(
-  //     localStorage.getItem("role") ?? {
-  //       admin: false,
-  //       authorized: false,
-  //       owner: false,
-  //       customer: false,
-  //     }
-  //   );
+  const [role, setRole] = useState(
+    localStorage.getItem("role") ?? {
+      admin: false,
+      authorized: false,
+      owner: false,
+      customer: false,
+    }
+  );
 
-  //   const { admin, authorized, owner, customer } = role;
+  const { admin, authorized, owner, customer } = role;
 
   // FUNCIONES DE AUTENTICACION
-  const login = useCallback((token) => {
+  const login = useCallback((token, role) => {
     localStorage.setItem("access_token", token);
+    localStorage.setItem("role", role);
     setIsAuthenticated(true);
   }, []);
 
   const logout = useCallback(() => {
     localStorage.removeItem("access_token");
+    localStorage.removeItem("role");
+    localStorage.removeItem("sessionId");
     setIsAuthenticated(false);
   }, []);
 
@@ -38,8 +41,12 @@ export function AuthContextProvider({ children }) {
       isAuthenticated,
       login,
       logout,
+      admin,
+      authorized,
+      owner,
+      customer,
     }),
-    [isAuthenticated, login, logout]
+    [isAuthenticated, login, logout, admin, authorized, owner, customer]
   );
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
