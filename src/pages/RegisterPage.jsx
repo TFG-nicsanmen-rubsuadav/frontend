@@ -7,6 +7,7 @@ import Input from "../components/Input";
 import Button from "../components/Button";
 import logo from "../assets/logo-green.png";
 import { getRegisterFields } from "../utils/fields";
+import { formatBirthDate } from "../utils/helpers";
 
 export default function RegisterPage() {
   const [form, setForm] = useState({
@@ -25,14 +26,13 @@ export default function RegisterPage() {
 
   function onInputChange(e) {
     setForm({ ...form, [e.target.name]: e.target.value });
-
-    //limpiamos los errores
     setErrors("");
   }
 
   async function onSubmit(e) {
     e.preventDefault();
-    const { status, data } = await fetchRegister(form);
+
+    const { status, data } = await fetchRegister(formatBirthDate(form));
 
     switch (status) {
       case 201:
@@ -50,7 +50,8 @@ export default function RegisterPage() {
             data.passwordError ||
             data.phoneError ||
             data.birthDateError ||
-            data.rol
+            data.rol ||
+            data.email
         );
         break;
     }
