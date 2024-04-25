@@ -25,6 +25,7 @@ export function AuthContextProvider({ children }) {
   const login = useCallback((token, role) => {
     localStorage.setItem("access_token", token);
     localStorage.setItem("role", role);
+    setRole(role);
     setIsAuthenticated(true);
   }, []);
 
@@ -32,6 +33,12 @@ export function AuthContextProvider({ children }) {
     localStorage.removeItem("access_token");
     localStorage.removeItem("role");
     localStorage.removeItem("sessionId");
+    setRole({
+      admin: false,
+      authorized: false,
+      owner: false,
+      customer: false,
+    });
     setIsAuthenticated(false);
   }, []);
 
