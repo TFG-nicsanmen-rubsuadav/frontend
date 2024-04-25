@@ -98,7 +98,7 @@ export default function RegisterPage() {
             name="rol"
             value={rol}
             id="rol"
-            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            className="flex items-center border p-2 rounded-lg w-full md:w-[450px] h-[40px] bg-bg-custom text-md bg-transparent text-gray-custom outline-0"
             onChange={(e) => onInputChange(e)}
           >
             <option defaultValue>Seleccione un rol</option>
