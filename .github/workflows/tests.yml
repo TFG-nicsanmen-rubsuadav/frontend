@@ -14,7 +14,6 @@ jobs:
         with:
           start: npm run dev
           wait-on: "http://localhost:5173" # Waits for above
-          tag: "test, production" # Tags the test run
 
       - name: Upload coverage to Codacy
         uses: codacy/codacy-coverage-reporter-action@v1
