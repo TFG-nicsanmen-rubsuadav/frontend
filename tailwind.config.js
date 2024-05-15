@@ -11,6 +11,7 @@ export default {
         "green-button": "#034e41",
         "hover-button": "#0e977e",
         "active-button": "#0EC8A8",
+        "gray-background": "#d9d9d9",
       },
       variants: {
         backgroundColor: ["responsive", "hover", "focus", "active"],
