@@ -9,6 +9,8 @@ import ProtectedRoute from "./context/routes/ProtectedRoute";
 // Pages
 import RegisterPage from "./pages/RegisterPage";
 import LoginPage from "./pages/LoginPage";
+import MenuPage from "./pages/MenuPage";
+import RestaurantPage from "./pages/RestaurantPage";
 
 export default function App() {
   return (
@@ -20,6 +22,8 @@ export default function App() {
             <Route path="/login" element={<LoginPage />} />
           </Route>
           <Route path="/" element={<PublicRoute />}>
+            <Route path="/:restaurantId/menu" element={<MenuPage />} />
+            <Route path="/restaurant/:restaurantId" element={<RestaurantPage />} />
             <Route index element={<h1>Hola Mundo</h1>} />
           </Route>
         </Routes>

@@ -40,6 +40,9 @@ describe("RegisterPage", () => {
   it("should register", () => {
     setupIntercept(201, {
       sessionId: "123",
+      rol: {
+        customer: false,
+      },
     });
 
     typeAndAssert('input[name="name"]', "John2");
