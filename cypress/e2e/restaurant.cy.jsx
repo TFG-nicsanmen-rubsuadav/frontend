@@ -17,12 +17,6 @@ describe("showing the restaurant/menu component", () => {
 
     // showing the restaurant menu
     cy.get("button").eq(0).click();
-
-    cy.intercept(
-      "GET",
-      `/api/restaurant/3bdGxrc3e1yFzHcVGw5Y/zUKq6KT3LRmYAe2yLOCR/showSections`
-    ).as("getSections");
-
     cy.get("button").should("exist");
     cy.get("h2").should("exist");
     cy.get("span").should("exist");
