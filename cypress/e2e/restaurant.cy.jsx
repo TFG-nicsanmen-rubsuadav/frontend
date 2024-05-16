@@ -17,10 +17,18 @@ describe("showing the restaurant/menu component", () => {
 
     // showing the restaurant menu
     cy.get("button").eq(0).click();
-    cy.get("button").should("exist");
-    cy.get("h2").should("exist");
-    cy.get("span").should("exist");
-    cy.get("div").should("exist");
-    cy.get("p").should("exist");
+
+    cy.intercept(
+      "GET",
+      `/api/restaurant/3bdGxrc3e1yFzHcVGw5Y/zUKq6KT3LRmYAe2yLOCR/showSections`
+    )
+      .as("getSections")
+      .then(() => {
+        cy.get("button").should("exist");
+        cy.get("h2").should("exist");
+        cy.get("span").should("exist");
+        cy.get("div").should("exist");
+        cy.get("p").should("exist");
+      });
   });
 });
