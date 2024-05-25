@@ -24,12 +24,12 @@ export function getRegisterFields(
       value: lastName,
       onChange: (e) => onInputChange(e),
     },
-    {
-      type: "text",
-      placeholder: "Restaurante Rosa Luxemburgo",
-      label: "Nombre del local",
-      name: "localName",
-    },
+    // {
+    //   type: "text",
+    //   placeholder: "Restaurante Rosa Luxemburgo",
+    //   label: "Nombre del local",
+    //   name: "localName",
+    // },
     // {
     //   type: "text",
     //   placeholder: "rosa-luxemburgo",

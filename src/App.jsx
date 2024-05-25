@@ -23,7 +23,7 @@ export default function App() {
           </Route>
           <Route path="/" element={<PublicRoute />}>
             <Route path="/:restaurantId/menu" element={<MenuPage />} />
-            <Route path="/restaurant" element={<RestaurantPage />} />
+            <Route path="/restaurant/:restaurantId" element={<RestaurantPage />} />
             <Route index element={<h1>Hola Mundo</h1>} />
           </Route>
         </Routes>

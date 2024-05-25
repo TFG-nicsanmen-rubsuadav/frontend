@@ -2,14 +2,16 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 
 // local imports
-import { fetchRegister } from "../api/endpoints";
+import { fetchRegister, fetchRestaurants } from "../api/endpoints";
 import Input from "../components/Input";
 import Button from "../components/Button";
 import logo from "../assets/logo-green.png";
 import { getRegisterFields } from "../utils/fields";
 import { formatBirthDate } from "../utils/helpers";
+import { useAuthContext } from "../context/useAuthContext";
 
 export default function RegisterPage() {
+  const { login } = useAuthContext();
   const [form, setForm] = useState({
     name: "",
     lastName: "",
@@ -18,15 +20,29 @@ export default function RegisterPage() {
     phone: "",
     birthDate: "",
     rol: "",
+    restId: "",
   });
 
   const [errors, setErrors] = useState("");
+  const [restaurants, setRestaurants] = useState([]);
 
-  const { name, lastName, email, password, phone, birthDate, rol } = form;
+  const { name, lastName, email, password, phone, birthDate, rol, restId } =
+    form;
 
   function onInputChange(e) {
     setForm({ ...form, [e.target.name]: e.target.value });
     setErrors("");
+  }
+
+  async function handleRoleChange(e) {
+    const newRole = e.target.value;
+    setForm({ ...form, rol: newRole });
+    setErrors("");
+
+    if (newRole === "owner") {
+      const data = await fetchRestaurants();
+      setRestaurants(data);
+    }
   }
 
   async function onSubmit(e) {
@@ -36,10 +52,12 @@ export default function RegisterPage() {
 
     switch (status) {
       case 201:
+        login(data.token, data.rol);
         if (rol === "owner") {
+          localStorage.setItem("restaurantId", restId);
           localStorage.setItem("sessionId", data.sessionId);
           const url = localStorage.getItem("sessionId");
-          window.location.replace(url);
+          window.location.assign(url);
         }
         break;
       case 400:
@@ -51,7 +69,8 @@ export default function RegisterPage() {
             data.phoneError ||
             data.birthDateError ||
             data.rol ||
-            data.email
+            data.email ||
+            data.restId
         );
         break;
     }
@@ -99,12 +118,28 @@ export default function RegisterPage() {
             value={rol}
             id="rol"
             className="flex items-center border p-2 rounded-lg w-full md:w-[450px] h-[40px] bg-bg-custom text-md bg-transparent text-gray-custom outline-0"
-            onChange={(e) => onInputChange(e)}
+            onChange={handleRoleChange}
           >
             <option defaultValue>Seleccione un rol</option>
             <option value="owner">Dueño</option>
             <option value="customer">Cliente</option>
           </select>
+          {rol === "owner" && (
+            <select
+              name="restId"
+              value={restId}
+              id="restId"
+              className=" mt-6 flex items-center border p-2 rounded-lg w-full md:w-[450px] h-[40px] bg-bg-custom text-md bg-transparent text-gray-custom outline-0"
+              onChange={(e) => onInputChange(e)}
+            >
+              <option defaultValue>Seleccione un restaurante</option>
+              {restaurants.map((restaurant) => (
+                <option key={restaurant.id} value={restaurant.id}>
+                  {restaurant.restaurantName}
+                </option>
+              ))}
+            </select>
+          )}
           {errors && (
             <div className="flex flex-col items-center justify-center w-full lg:w-3/4">
               <span className="text-red-500 text-sm">{errors}</span>

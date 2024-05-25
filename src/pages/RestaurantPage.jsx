@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { PhoneIcon, MapPinIcon } from "@heroicons/react/24/outline";
 
 // local imports
@@ -8,12 +8,10 @@ import Button from "../components/Button";
 
 export default function RestaurantPage() {
   const [restaurant, setRestaurant] = useState({});
+  const { restaurantId } = useParams();
 
-  // TODO: EL ID DEL RESTAURANTE DEBE SER DINÁMICO
   async function fetchRestaurant() {
-    const response = await fetch(
-      `${API_URL}/api/restaurant/3bdGxrc3e1yFzHcVGw5Y`
-    );
+    const response = await fetch(`${API_URL}/api/restaurant/${restaurantId}`);
     const data = await response.json();
     setRestaurant(data);
   }

@@ -25,3 +25,15 @@ export async function fetchRegister(form) {
   const data = await response.json();
   return { status: response.status, data };
 }
+
+export async function fetchRestaurants() {
+  const response = await fetch(`${API_URL}/api/restaurants`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+
+  const data = await response.json();
+  return data;
+}
