@@ -84,7 +84,7 @@ export default function SearchBar() {
           key={restaurant.id}
           onClick={() => handleRestaurantClick(restaurant)}
           className="cursor-pointer bg-white p-2 mt-2 border rounded"
-          title={`/restaurant/${restaurant.id}`} 
+          title={`/restaurant/${restaurant.id}`}
         >
           {restaurant.restaurantName}
         </div>
