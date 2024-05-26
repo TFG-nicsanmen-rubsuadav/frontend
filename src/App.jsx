@@ -11,6 +11,7 @@ import RegisterPage from "./pages/RegisterPage";
 import LoginPage from "./pages/LoginPage";
 import MenuPage from "./pages/MenuPage";
 import RestaurantPage from "./pages/RestaurantPage";
+import LandingPage from "./pages/LandingPage";
 
 export default function App() {
   return (
@@ -23,8 +24,11 @@ export default function App() {
           </Route>
           <Route path="/" element={<PublicRoute />}>
             <Route path="/:restaurantId/menu" element={<MenuPage />} />
-            <Route path="/restaurant/:restaurantId" element={<RestaurantPage />} />
-            <Route index element={<h1>Hola Mundo</h1>} />
+            <Route
+              path="/restaurant/:restaurantId"
+              element={<RestaurantPage />}
+            />
+            <Route index element={<LandingPage />} />
           </Route>
         </Routes>
       </Router>
