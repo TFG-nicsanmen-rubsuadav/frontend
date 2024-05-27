@@ -38,6 +38,18 @@ export async function fetchRestaurants() {
   return data;
 }
 
+export async function fetchRestaurant(id) {
+  const response = await fetch(`${API_URL}/api/restaurant/${id}`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+
+  const data = await response.json();
+  return data;
+}
+
 export async function fetchNumberOfRestaurants() {
   const response = await fetch(`${API_URL}/api/restaurants/count`, {
     method: "GET",
@@ -99,4 +111,17 @@ export async function fetchSearchRestaurants(name, city) {
 
   const data = await response.json();
   return { status: response.status, data };
+}
+
+export async function fetchRecommendarions() {
+  const response = await fetch(`${API_URL}/api/recommendations`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `${localStorage.getItem("access_token")}`,
+    },
+  });
+
+  const data = await response.json();
+  return data;
 }

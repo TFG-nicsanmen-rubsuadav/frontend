@@ -1,4 +1,4 @@
-export default function Button({ type, text, color, className }) {
+export default function Button({ type, text, color, className, onClick}) {
   return (
     <button
       className={`font-bold py-2 px-4 rounded text-sm sm:text-base md:text-base ${className} ${
@@ -7,6 +7,7 @@ export default function Button({ type, text, color, className }) {
           : "bg-primary-yellow text-black"
       }`}
       type={type}
+      onClick={onClick}
     >
       {text}
     </button>

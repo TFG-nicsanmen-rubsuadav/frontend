@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { StarIcon } from "@heroicons/react/24/outline";
 
 // local imports
 import { fetchAllCities, fetchSearchRestaurants } from "../api/endpoints";
@@ -78,7 +79,7 @@ export default function SearchBar() {
           ))}
         </select>
       </form>
-      {errors && <div className="mt-2 text-sm text-red-600">{errors}</div>}
+      {errors && <p className="mt-2 text-sm text-red-600">{errors}</p>}
       {restaurants.map((restaurant) => (
         <div
           key={restaurant.id}
@@ -86,7 +87,14 @@ export default function SearchBar() {
           className="cursor-pointer bg-white p-2 mt-2 border rounded"
           title={`/restaurant/${restaurant.id}`}
         >
-          {restaurant.restaurantName}
+          <div className="flex items-center">
+            {restaurant.restaurantName}
+            {restaurant.ownerId && (
+              <span className="inline-flex ml-2">
+                <StarIcon className="w-5 h-5 text-yellow-600" />
+              </span>
+            )}
+          </div>
         </div>
       ))}
     </div>

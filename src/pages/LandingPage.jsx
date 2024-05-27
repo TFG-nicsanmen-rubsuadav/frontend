@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import {
-  BuildingOfficeIcon,
-  ChartBarSquareIcon,
-  QrCodeIcon,
+  BuildingOffice2Icon,
+  ChatBubbleOvalLeftEllipsisIcon,
+  MapPinIcon,
 } from "@heroicons/react/24/outline";
 
 // local imports
@@ -13,6 +13,7 @@ import {
   fetchNumberOfOpinions,
   fetchNumberOfRestaurants,
 } from "../api/endpoints";
+import SR from "../components/SR";
 
 export default function LandingPage() {
   const [restaurants, setRestaurants] = useState({});
@@ -33,20 +34,21 @@ export default function LandingPage() {
   }, []);
 
   return (
-    <div className="mx-4 mb-16">
+    <div className="mb-16">
       <Navbar />
       <div className="flex flex-col items-center justify-center">
         <SearchBar />
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 sm:gap-24">
+        <SR />
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 sm:gap-24 mt-14">
           <div className="bg-bg-custom rounded-xl shadow-md flex flex-col items-center justify-center h-32 w-full sm:w-44">
-            <QrCodeIcon className="h-10 w-10" />
+            <BuildingOffice2Icon className="h-10 w-10" />
             <h1 className="font-bold text-3xl text-center">
               {restaurants.numberOfRestaurants}
             </h1>
             <h3 className="text-sm font-semibold">RESTAURANTES</h3>
           </div>
           <div className="bg-bg-custom rounded-xl shadow-md flex flex-col items-center justify-center h-32 w-full sm:w-40">
-            <BuildingOfficeIcon className="h-10 w-10" />
+            <MapPinIcon className="h-10 w-10" />
             <h1 className="font-bold text-3xl text-center">
               {cities.numberOfCities}
             </h1>
@@ -54,7 +56,7 @@ export default function LandingPage() {
           </div>
           {opinions.numberOfOpinions && (
             <div className="bg-bg-custom rounded-xl shadow-md flex flex-col items-center justify-center h-32 w-full sm:w-40">
-              <ChartBarSquareIcon className="h-10 w-10" />
+              <ChatBubbleOvalLeftEllipsisIcon className="h-10 w-10" />
               <h1 className="font-bold text-3xl text-center">
                 {opinions.numberOfOpinions}
               </h1>
