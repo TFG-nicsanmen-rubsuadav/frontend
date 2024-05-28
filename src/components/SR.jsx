@@ -17,13 +17,13 @@ export default function SR() {
 
   async function getRecommendations() {
     setRestaurantsLoaded(true);
-    const {status, recData} = await fetchRecommendarions();
+    const { status, recData } = await fetchRecommendarions();
     // TODO: COMPROBAR A MAÑANA SI ESTO FUNCIONA
     if (status === 403) {
       localStorage.removeItem("access_token");
       localStorage.removeItem("role");
       // alerta emergente de sesion expirada
-      navigate("/login")
+      navigate("/login");
     }
     const results = recData.recommendations;
     for (let result of results) {
