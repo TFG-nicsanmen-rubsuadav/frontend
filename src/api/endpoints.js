@@ -123,5 +123,5 @@ export async function fetchRecommendarions() {
   });
 
   const data = await response.json();
-  return data;
+  return {status: response.status, recData: data};
 }
