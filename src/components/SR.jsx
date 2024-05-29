@@ -23,7 +23,9 @@ export default function SR() {
       localStorage.removeItem("access_token");
       localStorage.removeItem("role");
       // alerta emergente de sesion expirada
+      console.log("Sesión expirada");
       navigate("/login");
+      return;
     }
     const results = recData.recommendations;
     for (let result of results) {
