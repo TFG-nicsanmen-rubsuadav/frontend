@@ -5,6 +5,7 @@ import { PhoneIcon, MapPinIcon } from "@heroicons/react/24/outline";
 // local imports
 import { API_URL } from "../config";
 import Button from "../components/Button";
+import { logRestaurantVisit } from "../../firebaseConfig";
 
 export default function RestaurantPage() {
   const [restaurant, setRestaurant] = useState({});
@@ -18,6 +19,7 @@ export default function RestaurantPage() {
 
   useEffect(() => {
     fetchRestaurant();
+    logRestaurantVisit(restaurantId);
   }, []);
 
   return (

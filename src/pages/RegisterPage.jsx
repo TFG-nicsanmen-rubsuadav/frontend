@@ -9,6 +9,7 @@ import logo from "../assets/logo-green.png";
 import { getRegisterFields } from "../utils/fields";
 import { formatBirthDate } from "../utils/helpers";
 import { useAuthContext } from "../context/useAuthContext";
+import { logRestaurantVisit } from "../../firebaseConfig";
 
 export default function RegisterPage() {
   const { login } = useAuthContext();
@@ -58,6 +59,10 @@ export default function RegisterPage() {
           localStorage.setItem("sessionId", data.sessionId);
           const url = localStorage.getItem("sessionId");
           window.location.assign(url);
+
+          // Add analytics event
+          logRestaurantVisit(restId);
+          console.log("Owner registered");
         }
         break;
       case 400:
