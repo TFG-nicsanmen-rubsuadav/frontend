@@ -9,30 +9,23 @@ import logo from "../assets/logo-green.png";
 import { useAuthContext } from "../context/useAuthContext";
 
 export default function LoginPage() {
-  // 0) instanciamos el contexto de autenticación
   const { login } = useAuthContext();
 
-  // 1) creamos estado inicial para el formulario
   const [form, setForm] = useState({
     email: "",
     password: "",
   });
 
-  // 2) declaramos el estado inicial para los errores
   const [errors, setErrors] = useState("");
 
-  // 3) instanciamos los inputs del formulario
   const { email, password } = form;
 
-  // 4) manejamos el cambio en los inputs
   function onInputChange(e) {
     setForm({ ...form, [e.target.name]: e.target.value });
 
-    //limpiamos los errores
     setErrors("");
   }
 
-  // 5) manejamos el envío del formulario
   async function onSubmit(e) {
     e.preventDefault();
     const { status, data } = await fetchLogin(form);
@@ -40,6 +33,7 @@ export default function LoginPage() {
     switch (status) {
       case 200:
         login(data.token, data.userRole);
+        localStorage.setItem("userId", data.userId);
         break;
       case 400:
         setErrors(data.email || data.password || data.credentials);
