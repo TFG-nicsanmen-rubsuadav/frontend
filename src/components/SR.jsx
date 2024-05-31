@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { ArrowUturnRightIcon, StarIcon } from "@heroicons/react/24/outline";
 
 // local imports
@@ -13,7 +12,6 @@ export default function SR() {
   const [recommendations, setRecommendations] = useState([]);
   const [restaurantsLoaded, setRestaurantsLoaded] = useState(false);
   const [loading, setLoading] = useState(false);
-  let navigate = useNavigate();
 
   async function getRecommendations() {
     setRestaurantsLoaded(true);
@@ -23,8 +21,7 @@ export default function SR() {
       localStorage.removeItem("access_token");
       localStorage.removeItem("role");
       // alerta emergente de sesion expirada
-      console.log("Sesión expirada");
-      navigate("/login");
+      window.location.href = "/login";
       return;
     }
     const results = recData.recommendations;
