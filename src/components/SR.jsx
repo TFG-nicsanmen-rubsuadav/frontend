@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { ArrowUturnRightIcon, StarIcon } from "@heroicons/react/24/outline";
 
 // local imports
@@ -12,6 +13,7 @@ export default function SR() {
   const [recommendations, setRecommendations] = useState([]);
   const [restaurantsLoaded, setRestaurantsLoaded] = useState(false);
   const [loading, setLoading] = useState(false);
+  let navigate = useNavigate();
 
   async function getRecommendations() {
     setRestaurantsLoaded(true);
