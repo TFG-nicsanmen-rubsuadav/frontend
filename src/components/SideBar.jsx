@@ -5,13 +5,14 @@ import {
   ChartBarSquareIcon,
   XMarkIcon,
 } from "@heroicons/react/24/outline";
+import { Link } from "react-router-dom";
 
 // local imports
 import HamburgerMenu from "./HamburgerMenu";
 import logo from "../assets/logo-yellow.png";
 import { fetchUser } from "../api/endpoints";
 
-export default function SideBar() {
+export default function SideBar({ restaurantId }) {
   const [isOpen, setIsOpen] = useState(false);
   const [user, setUser] = useState({});
 
@@ -50,7 +51,9 @@ export default function SideBar() {
 
                 <button className="flex items-center my-6 w-full p-2 rounded-md justify-center focus:outline-none bg-green-button hover:bg-hover-button active:bg-active-button">
                   <PencilSquareIcon className="h-6 w-6 text-white mr-2" />
-                  <span className="text-white">Cartas/Menus</span>
+                  <Link to={`/${restaurantId}/menu`}>
+                    <span className="text-white">Cartas/Menus</span>
+                  </Link>
                 </button>
 
                 <button className="flex items-center my-6 w-full p-2 rounded-md justify-center focus:outline-none bg-green-button hover:bg-hover-button active:bg-active-button">
@@ -82,7 +85,9 @@ export default function SideBar() {
 
               <button className="flex items-center my-6 w-full p-2 rounded-md justify-center focus:outline-none bg-green-button hover:bg-hover-button active:bg-active-button">
                 <PencilSquareIcon className="h-6 w-6 text-white mr-2" />
-                <span className="text-white">Cartas/Menus</span>
+                <Link to={`/${restaurantId}/menu`}>
+                  <span className="text-white">Cartas/Menus</span>
+                </Link>
               </button>
 
               <button className="flex items-center my-6 w-full p-2 rounded-md justify-center focus:outline-none bg-green-button hover:bg-hover-button active:bg-active-button">
