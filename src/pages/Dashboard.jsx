@@ -6,17 +6,17 @@ import {
   fetchTotalVisits,
   fetchVisitsByDate,
   fetchRestaurantByUserId,
+  fetchRestaurantById,
 } from "../api/endpoints";
-import BarChar from "../components/BarChar";
 import LineChar from "../components/LineChar";
 
 export default function Dashboard() {
   const [totalVisits, setTotalVisits] = useState({});
-  const [visitsByDate, setVisitsByDate] = useState({});
   const [visitsByRange, setVisitsByRange] = useState({});
   const [restaurantId, setRestaurantId] = useState(null);
   const userId = localStorage.getItem("userId");
   const [range, setRange] = useState(7);
+  const [restaurant, setRestaurant] = useState({});
 
   async function getRestaurantByUserId() {
     const response = await fetchRestaurantByUserId(userId);
@@ -24,27 +24,14 @@ export default function Dashboard() {
     setRestaurantId(restaurantId);
   }
 
+  async function getRestaurantById() {
+    const response = await fetchRestaurantById(restaurantId);
+    setRestaurant(response);
+  }
+
   async function getTotalVisits() {
     const response = await fetchTotalVisits(restaurantId);
     setTotalVisits(response);
-  }
-
-  async function getVisitsByDate() {
-    const endDate = new Date();
-    const startDate = new Date(endDate.getFullYear(), 4, 26); // 26 de mayo del año actual
-    const visitsByDate = {};
-
-    for (
-      let date = startDate;
-      date <= endDate;
-      date.setDate(date.getDate() + 1)
-    ) {
-      const dateString = date.toLocaleDateString("en-CA");
-      const response = await fetchVisitsByDate(restaurantId, dateString);
-      visitsByDate[dateString] = response.visits;
-    }
-
-    setVisitsByDate(visitsByDate);
   }
 
   async function getVisitsByRange(range) {
@@ -72,20 +59,15 @@ export default function Dashboard() {
 
   useEffect(() => {
     getRestaurantByUserId();
-  }, []);
+    getRestaurantById();
+  }, [restaurantId, userId]);
 
   useEffect(() => {
     if (restaurantId) {
       getTotalVisits();
-      getVisitsByDate();
       getVisitsByRange(range);
     }
   }, [restaurantId, range]);
-
-  const visitsArray = Object.entries(visitsByDate).map(([date, visits]) => ({
-    date,
-    visits,
-  }));
 
   const rangeArray = Object.entries(visitsByRange).map(([date, visits]) => ({
     date,
@@ -95,26 +77,33 @@ export default function Dashboard() {
   return (
     <div className="flex flex-col md:flex-row">
       <SideBar />
-      <div className="mt-5 sm:ml-5 w-full max-w-2xl mx-auto">
-        <h1 className="text-black font-bold text-xl mt-5 ml-10 mb-44">
-          {totalVisits.totalVisits} visitas totales
-        </h1>
-        <div className="w-full">
-          <BarChar
-            arrayData={visitsArray}
-            dataXKey="date"
-            dataYKey="visits"
-            dataYLabel="Visitas"
-          />
+      <div className="mt-5 sm:ml-5 w-full max-w-2xl mx-auto ">
+        <div className="flex justify-between items-center">
+          <h1 className="font-semibold ml-2 text-2xl">
+            Panel de control - {restaurant.restaurantName}
+          </h1>
+        </div>
+        <div className="flex items-center mb-10">
           <select
-            className="ml-8"
+            className="font-bold py-2 px-4 my-5 ml-5 rounded text-sm sm:text-base md:text-base bg-green-button hover:bg-hover-button text-white"
             value={range}
             onChange={(e) => setRange(e.target.value)}
           >
-            <option value={7}>7 días</option>
-            <option value={15}>15 días</option>
-            <option value={30}>30 días</option>
+            <option className="bg-green-button" value={7}>
+              7 días
+            </option>
+            <option className="bg-green-button" value={14}>
+              14 días
+            </option>
+            <option className="bg-green-button" value={30}>
+              30 días
+            </option>
           </select>
+          <h1 className="text-black text-lg mt- ml-10 mr-5">
+            Número de visitas totales: {totalVisits.totalVisits}
+          </h1>
+        </div>
+        <div className="w-full">
           <LineChar
             arrayData={rangeArray}
             dataXKey="date"

@@ -185,3 +185,27 @@ export async function fetchVisitsByRange(restaurantId, range) {
   const data = await response.json();
   return data;
 }
+
+export async function fetchRestaurantById(restaurantId) {
+  const response = await fetch(`${API_URL}/api/restaurant/${restaurantId}`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+
+  const data = await response.json();
+  return data;
+}
+
+export async function fetchUser(userId) {
+  const response = await fetch(`${API_URL}/auth/profile/${userId}`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+
+  const data = await response.json();
+  return data;
+}

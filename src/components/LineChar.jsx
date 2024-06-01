@@ -14,8 +14,13 @@ export default function LineChar({
   dataYKey,
   dataYLabel,
 }) {
+
+  const isMobile = window.innerWidth <= 900;
+  const width = isMobile ? "100%" : "150%";
+  const height = isMobile ? 300 : 500;
+
   return (
-    <ResponsiveContainer width="100%" height={300}>
+    <ResponsiveContainer width={width} height={height}>
       <LineChart
         data={arrayData}
         margin={{
