@@ -6,9 +6,9 @@ import {
   fetchTotalVisits,
   fetchVisitsByDate,
   fetchRestaurantByUserId,
-  fetchVisitsByRange,
 } from "../api/endpoints";
 import BarChar from "../components/BarChar";
+import LineChar from "../components/LineChar";
 
 export default function Dashboard() {
   const [totalVisits, setTotalVisits] = useState({});
@@ -16,6 +16,7 @@ export default function Dashboard() {
   const [visitsByRange, setVisitsByRange] = useState({});
   const [restaurantId, setRestaurantId] = useState(null);
   const userId = localStorage.getItem("userId");
+  const [range, setRange] = useState(7);
 
   async function getRestaurantByUserId() {
     const response = await fetchRestaurantByUserId(userId);
@@ -46,11 +47,27 @@ export default function Dashboard() {
     setVisitsByDate(visitsByDate);
   }
 
-  // range is 7 or 30 (TODO: add a select input to choose the range)
-  async function getVisitsByRange() {
-    const range = 7;
-    const response = await fetchVisitsByRange(restaurantId, range);
-    setVisitsByRange(response);
+  async function getVisitsByRange(range) {
+    const endDate = new Date();
+    const startDate = new Date();
+    startDate.setDate(endDate.getDate() - range);
+    const visitsByRange = {};
+
+    for (
+      let date = startDate;
+      date <= endDate;
+      date.setDate(date.getDate() + 1)
+    ) {
+      const requestDateString = date.toLocaleDateString("en-CA"); // para la solicitud al backend
+      const displayDateString = date.toLocaleDateString("es-ES", {
+        day: "2-digit",
+        month: "short",
+      }); // para el gráfico
+      const response = await fetchVisitsByDate(restaurantId, requestDateString);
+      visitsByRange[displayDateString] = response.visits;
+    }
+
+    setVisitsByRange(visitsByRange);
   }
 
   useEffect(() => {
@@ -61,16 +78,19 @@ export default function Dashboard() {
     if (restaurantId) {
       getTotalVisits();
       getVisitsByDate();
-      getVisitsByRange();
+      getVisitsByRange(range);
     }
-  }, [restaurantId]);
+  }, [restaurantId, range]);
 
   const visitsArray = Object.entries(visitsByDate).map(([date, visits]) => ({
     date,
     visits,
   }));
 
-  console.log("visitsByRange", visitsByRange); // de momento para que no se queje el codacy de varibale no usada
+  const rangeArray = Object.entries(visitsByRange).map(([date, visits]) => ({
+    date,
+    visits,
+  }));
 
   return (
     <div className="flex flex-col md:flex-row">
@@ -82,6 +102,21 @@ export default function Dashboard() {
         <div className="w-full">
           <BarChar
             arrayData={visitsArray}
+            dataXKey="date"
+            dataYKey="visits"
+            dataYLabel="Visitas"
+          />
+          <select
+            className="ml-8"
+            value={range}
+            onChange={(e) => setRange(e.target.value)}
+          >
+            <option value={7}>7 días</option>
+            <option value={15}>15 días</option>
+            <option value={30}>30 días</option>
+          </select>
+          <LineChar
+            arrayData={rangeArray}
             dataXKey="date"
             dataYKey="visits"
             dataYLabel="Visitas"
