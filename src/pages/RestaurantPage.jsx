@@ -16,8 +16,17 @@ export default function RestaurantPage() {
     setRestaurant(data);
   }
 
+  async function updateVisits() {
+    const response = await fetch(
+      `${API_URL}/api/restaurant/${restaurantId}/visit`
+    );
+    const data = await response.json();
+    console.log(data);
+  }
+
   useEffect(() => {
     fetchRestaurant();
+    updateVisits();
   }, []);
 
   return (

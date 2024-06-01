@@ -7,6 +7,7 @@ import { useAuthContext } from "../context/useAuthContext";
 import { fetchRecommendarions, fetchRestaurant } from "../api/endpoints";
 import Button from "../components/Button";
 import { BeatLoader } from "react-spinners";
+import { showErrorAlert } from "../utils/alerts";
 
 export default function SR() {
   const { isAuthenticated } = useAuthContext();
@@ -18,12 +19,12 @@ export default function SR() {
   async function getRecommendations() {
     setRestaurantsLoaded(true);
     const { status, recData } = await fetchRecommendarions();
-    // TODO: COMPROBAR A MAÑANA SI ESTO FUNCIONA
     if (status === 403) {
-      localStorage.removeItem("access_token");
-      localStorage.removeItem("role");
-      // alerta emergente de sesion expirada
-      navigate("/login");
+      localStorage.clear();
+      showErrorAlert().then(() => {
+        window.location.href = "/login";
+      });
+      return;
     }
     const results = recData.recommendations;
     for (let result of results) {

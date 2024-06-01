@@ -123,5 +123,89 @@ export async function fetchRecommendarions() {
   });
 
   const data = await response.json();
-  return {status: response.status, recData: data};
+  return { status: response.status, recData: data };
+}
+
+export async function fetchRestaurantByUserId(userId) {
+  const response = await fetch(
+    `${API_URL}/api/restaurant/restaurantByUser?userId=${userId}`,
+    {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }
+  );
+
+  const data = await response.json();
+  return data;
+}
+
+export async function fetchTotalVisits(restaurantId) {
+  const response = await fetch(
+    `${API_URL}/api/restaurant/${restaurantId}/visits`,
+    {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }
+  );
+
+  const data = await response.json();
+  return data;
+}
+
+export async function fetchVisitsByDate(restaurantId, date) {
+  const response = await fetch(
+    `${API_URL}/api/restaurant/${restaurantId}/visitsByDate?date=${date}`,
+    {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }
+  );
+
+  const data = await response.json();
+  return data;
+}
+
+export async function fetchVisitsByRange(restaurantId, range) {
+  const response = await fetch(
+    `${API_URL}/api/restaurant/${restaurantId}/visitsByRange?days=${range}`,
+    {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }
+  );
+
+  const data = await response.json();
+  return data;
+}
+
+export async function fetchRestaurantById(restaurantId) {
+  const response = await fetch(`${API_URL}/api/restaurant/${restaurantId}`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+
+  const data = await response.json();
+  return data;
+}
+
+export async function fetchUser(userId) {
+  const response = await fetch(`${API_URL}/auth/profile/${userId}`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+
+  const data = await response.json();
+  return data;
 }

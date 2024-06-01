@@ -9,6 +9,15 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+      - name: Set environment variables
+        run: |
+          echo "VITE_apiKey = '${{ secrets.VITE_APIKEY }}'" >> .env
+          echo "VITE_authDomain = '${{ secrets.VITE_AUTHDOMAIN }}'" >> .env
+          echo "VITE_projectId = '${{ secrets.VITE_PROJECTID }}'" >> .env
+          echo "VITE_storageBucket = '${{ secrets.VITE_STORAGEBUCKET }}'" >> .env
+          echo "VITE_messagingSenderId = '${{ secrets.VITE_MESSAGINGSENDERID }}'" >> .env
+          echo "VITE_appId = '${{ secrets.VITE_APPID }}'" >> .env
+          echo "VITE_measurementId = '${{ secrets.VITE_MEASUREMENTID }}'" >> .env
       - name: Cypress run
         uses: cypress-io/github-action@v6
         with:
