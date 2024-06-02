@@ -38,5 +38,6 @@ describe("rendering App component", () => {
   it("can search restaurants", () => {
     cy.get("select").select(1);
     cy.get("input").type(" ");
+    cy.get('div[title^="/restaurant/"]').first().click();
   });
 });
