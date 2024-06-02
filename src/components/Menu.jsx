@@ -1,17 +1,35 @@
 import { useEffect, useState } from "react";
 import {
-  PlusCircleIcon,
   TrashIcon,
   PencilSquareIcon,
+  PlusCircleIcon,
 } from "@heroicons/react/24/outline";
 
 // local imports
 import { API_URL } from "../config";
 import { useAuthContext } from "../context/useAuthContext";
+import Modal from "./Modal";
 
 export default function Menu({ restaurantId }) {
   const [fullMenu, setFullMenu] = useState([]);
   const { isAuthenticated } = useAuthContext();
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [currentDish, setCurrentDish] = useState(null);
+
+  // MODAL FUNCTIONS
+  function openModal(dish) {
+    setCurrentDish(dish);
+    setIsModalOpen(true);
+  }
+
+  function closeModal() {
+    setCurrentDish(null);
+    setIsModalOpen(false);
+  }
+
+  function handleCreateDish() {
+    openModal(null);
+  }
 
   async function fetchFullMenu() {
     const response = await fetch(
@@ -19,6 +37,22 @@ export default function Menu({ restaurantId }) {
     );
     const data = await response.json();
     setFullMenu(data.sections);
+  }
+
+  function handleEditSection(sectionId) {
+    console.log(`Editing section ${sectionId}`);
+  }
+
+  function handleDeleteSection(sectionId) {
+    console.log(`Deleting section ${sectionId}`);
+  }
+
+  function handleEditDish(dishId) {
+    console.log(`Editing dish ${dishId}`);
+  }
+
+  function handleDeleteDish(dishId) {
+    console.log(`Deleting dish ${dishId}`);
   }
 
   useEffect(() => {
@@ -112,6 +146,20 @@ export default function Menu({ restaurantId }) {
                   </div>
                 </div>
               ))}
+              {isAuthenticated && (
+                <div className="flex items-center">
+                  <button
+                    className="focus:outline-none"
+                    onClick={() => handleCreateDish()}
+                  >
+                    <PlusCircleIcon className="h-6 w-6 text-black hover:text-black hover:fill-active-button" />
+                  </button>
+                  <span className="ml-1">Añadir nuevo plato a la sección</span>
+                  {isModalOpen && (
+                    <Modal isOpen={isModalOpen} onClose={closeModal} sectionId={section.id} />
+                  )}
+                </div>
+              )}
             </div>
           )
       )}

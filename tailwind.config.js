@@ -12,7 +12,9 @@ export default {
         "hover-button": "#0e977e",
         "active-button": "#0EC8A8",
         "gray-background": "#d9d9d9",
+        "active-gray-button": "d0d0d0",
         "gray-label": "#e7e7e7",
+        "background-label": "#d7d7d7",
       },
       variants: {
         backgroundColor: ["responsive", "hover", "focus", "active"],
