@@ -21,3 +21,20 @@ export function getAllergens() {
     label: allergen,
   }));
 }
+
+export function validateDishPrices(
+  priceType,
+  rations,
+  uniquePrice,
+  rationsPrices
+) {
+  if (priceType === "unique") {
+    rations = { default: uniquePrice };
+    return {};
+  } else if (priceType === "rations") {
+    rations = rationsPrices;
+    return {};
+  } else {
+    return { price: "Selecciona un tipo de precio" };
+  }
+}

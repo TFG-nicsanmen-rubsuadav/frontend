@@ -4,28 +4,22 @@ import Select from "react-select";
 import { useState } from "react";
 import { fetchCreateDish } from "../api/endpoints";
 import { showErrorAlert, showSuccessAlert } from "../utils/alerts";
-import { getAllergens } from "../utils/helpers";
+import { getAllergens, validateDishPrices } from "../utils/helpers";
 
-export default function Modal({
-  isOpen,
-  onClose,
-  sectionId,
-  menuId,
-  restaurantId,
-}) {
+export default function Modal({ onClose, sectionId, menuId, restaurantId }) {
   const [form, setForm] = useState({
     name: "",
     description: "",
     available: true,
     allergens: [],
-    price: 0,
-    rations: {
-      tapa: 0,
-      media: 0,
-      entera: 0,
-    },
   });
   const [errors, setErrors] = useState({});
+  const [uniquePrice, setUniquePrice] = useState("");
+  const [rationsPrices, setRationsPrices] = useState({
+    tapa: "",
+    media: "",
+    entera: "",
+  });
   const { name, description } = form;
 
   function handleChange(e) {
@@ -40,8 +34,15 @@ export default function Modal({
 
   async function handleSubmit(e) {
     e.preventDefault();
+    let rations;
+    if (validateDishPrices(priceType, rations, uniquePrice, rationsPrices)) {
+      setErrors(
+        validateDishPrices(priceType, rations, uniquePrice, rationsPrices)
+      );
+      return;
+    }
     const { status } = await fetchCreateDish(
-      form,
+      { ...form, rations },
       restaurantId,
       menuId,
       sectionId
@@ -62,10 +63,6 @@ export default function Modal({
         });
         break;
     }
-  }
-
-  if (!isOpen) {
-    return null;
   }
 
   const [priceType, setPriceType] = useState(null);
@@ -111,7 +108,7 @@ export default function Modal({
                 }),
               }}
               className="w-full outline-0 text-black"
-              placeholder={`${allergensList.length} items selected`}
+              placeholder={`Hay ${allergensList.length}, puedes seleccionar todos los que apliquen o ninguno si no aplica`}
               noOptionsMessage={() => "–"}
               onChange={onChangeAllergens}
             />
@@ -142,14 +139,20 @@ export default function Modal({
               >
                 Precio por Ración
               </button>
+              {errors.price && (
+                <span className="text-red-500 text-sm">{errors.price}</span>
+              )}
             </div>
-
             {priceType === "unique" && (
               <div className="flex flex-col pb-2 sm:pb-7">
                 <label className="mb-0.5 text-md">Precio:</label>
                 <input
                   className="flex-grow text-md bg-background-label text-black outline-0"
-                  type="text"
+                  type="number"
+                  required
+                  min={0}
+                  value={uniquePrice}
+                  onChange={(e) => setUniquePrice(e.target.value)}
                 />
               </div>
             )}
@@ -183,7 +186,16 @@ export default function Modal({
                     <label className="mb-0.5 text-md">Precio ({type}):</label>
                     <input
                       className="flex-grow text-md bg-background-label text-black outline-0"
-                      type="text"
+                      type="number"
+                      min={0}
+                      required
+                      value={rationsPrices[type]}
+                      onChange={(e) =>
+                        setRationsPrices((prev) => ({
+                          ...prev,
+                          [type]: e.target.value,
+                        }))
+                      }
                     />
                   </div>
                 ))}
@@ -211,7 +223,6 @@ export default function Modal({
 }
 
 Modal.propTypes = {
-  isOpen: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,
   sectionId: PropTypes.string,
   menuId: PropTypes.string.isRequired,

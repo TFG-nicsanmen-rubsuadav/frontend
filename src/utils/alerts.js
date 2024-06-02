@@ -1,6 +1,6 @@
 import Swal from "sweetalert2";
 
-export async function showErrorAlert({ text }) {
+export async function showErrorAlert(text) {
   Swal.fire({
     icon: "error",
     title: "Session expirada!",
@@ -9,7 +9,7 @@ export async function showErrorAlert({ text }) {
   });
 }
 
-export async function showSuccessAlert({ text }) {
+export async function showSuccessAlert(text) {
   Swal.fire({
     icon: "success",
     title: "Éxito!",
