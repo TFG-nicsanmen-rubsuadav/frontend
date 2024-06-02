@@ -1,9 +1,5 @@
 import { useEffect, useState } from "react";
-import {
-  PlusCircleIcon,
-  TrashIcon,
-  PencilSquareIcon,
-} from "@heroicons/react/24/outline";
+import { TrashIcon, PencilSquareIcon } from "@heroicons/react/24/outline";
 
 // local imports
 import { API_URL } from "../config";
@@ -19,6 +15,22 @@ export default function Menu({ restaurantId }) {
     );
     const data = await response.json();
     setFullMenu(data.sections);
+  }
+
+  function handleEditSection(sectionId) {
+    console.log(`Editing section ${sectionId}`);
+  }
+
+  function handleDeleteSection(sectionId) {
+    console.log(`Deleting section ${sectionId}`);
+  }
+
+  function handleEditDish(dishId) {
+    console.log(`Editing dish ${dishId}`);
+  }
+
+  function handleDeleteDish(dishId) {
+    console.log(`Deleting dish ${dishId}`);
   }
 
   useEffect(() => {
