@@ -1,3 +1,5 @@
+import { allergensList } from "../utils/constants";
+
 export function formatBirthDate(form) {
   let formToSend = { ...form };
 
@@ -11,4 +13,11 @@ export function formatBirthDate(form) {
   }
 
   return formToSend;
+}
+
+export function getAllergens() {
+  return allergensList.map((allergen) => ({
+    value: allergen,
+    label: allergen,
+  }));
 }

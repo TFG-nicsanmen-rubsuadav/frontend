@@ -14,21 +14,18 @@ export default function Menu({ restaurantId }) {
   const [fullMenu, setFullMenu] = useState([]);
   const { isAuthenticated } = useAuthContext();
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [currentDish, setCurrentDish] = useState(null);
 
   // MODAL FUNCTIONS
-  function openModal(dish) {
-    setCurrentDish(dish);
+  function openModal() {
     setIsModalOpen(true);
   }
 
   function closeModal() {
-    setCurrentDish(null);
     setIsModalOpen(false);
   }
 
   function handleCreateDish() {
-    openModal(null);
+    openModal();
   }
 
   async function fetchFullMenu() {
@@ -160,6 +157,8 @@ export default function Menu({ restaurantId }) {
                       isOpen={isModalOpen}
                       onClose={closeModal}
                       sectionId={section.id}
+                      menuId="zUKq6KT3LRmYAe2yLOCR"
+                      restaurantId={restaurantId}
                     />
                   )}
                 </div>

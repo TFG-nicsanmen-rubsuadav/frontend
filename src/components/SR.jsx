@@ -21,7 +21,7 @@ export default function SR() {
     const { status, recData } = await fetchRecommendarions();
     if (status === 403) {
       localStorage.clear();
-      showErrorAlert().then(() => {
+      showErrorAlert("usar el SR").then(() => {
         window.location.href = "/login";
       });
       return;

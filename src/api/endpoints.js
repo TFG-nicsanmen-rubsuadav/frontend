@@ -209,3 +209,20 @@ export async function fetchUser(userId) {
   const data = await response.json();
   return data;
 }
+
+export async function fetchCreateDish(form, restaurantId, menuId, sectionId) {
+  const response = await fetch(
+    `${API_URL}/api/${restaurantId}/${menuId}/${sectionId}/createDish`,
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `${localStorage.getItem("access_token")}`,
+      },
+      body: JSON.stringify(form),
+    }
+  );
+
+  const data = await response.json();
+  return { status: response.status, data };
+}
