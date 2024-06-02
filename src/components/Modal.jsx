@@ -16,16 +16,16 @@ export default function Modal({ isOpen, onClose, sectionId }) {
 
   return (
     <div className="fixed inset-0 flex items-center justify-center">
-      <div className="modal-content rounded-md px-20 py-16 bg-gray-label w-1/2 h-1/2 max-h-full overflow-y-auto">
+      <div className="modal-content rounded-md px-4 sm:px-20 py-4 sm:py-16 bg-gray-label w-full sm:w-1/2 h-full sm:h-1/2 max-h-full overflow-y-auto">
         <form>
-          <div className="flex flex-col pb-7">
+          <div className="flex flex-col pb-2 sm:pb-7">
             <label className="mb-0.5 text-md">Nombre:</label>
             <input
               className="flex-grow text-md bg-background-label text-black outline-0"
               type="text"
             />
           </div>
-          <div className="flex flex-col pb-7">
+          <div className="flex flex-col pb-2 sm:pb-7">
             <label className="mb-0.5 text-md">Descripción:</label>
             <input
               className="flex-grow text-md bg-background-label text-black outline-0"
@@ -50,9 +50,9 @@ export default function Modal({ isOpen, onClose, sectionId }) {
               placeholder={`${allergensList.length} items selected`}
               noOptionsMessage={() => "–"}
             />
-            <div className="flex space-x-4 pb-7 justify-center m-8">
+            <div className="flex space-x-2 sm:space-x-4 pb-4 sm:pb-7 justify-center m-2 sm:m-8">
               <button
-                className={`font-bold py-2 px-4 rounded text-sm sm:text-base md:text-base text-white w-auto ${
+                className={`font-bold py-2 px-2 sm:px-4 rounded text-sm sm:text-base md:text-base text-white w-auto ${
                   priceType === "unique"
                     ? "bg-active-button"
                     : "bg-green-button hover:bg-hover-button"
@@ -65,7 +65,7 @@ export default function Modal({ isOpen, onClose, sectionId }) {
                 Precio Único
               </button>
               <button
-                className={`font-bold py-2 px-4 rounded text-sm sm:text-base md:text-base text-white w-auto ${
+                className={`font-bold py-2 px-2 sm:px-4 rounded text-sm sm:text-base md:text-base text-white w-auto ${
                   priceType === "portion"
                     ? "bg-active-button"
                     : "bg-green-button hover:bg-hover-button"
@@ -80,7 +80,7 @@ export default function Modal({ isOpen, onClose, sectionId }) {
             </div>
 
             {priceType === "unique" && (
-              <div className="flex flex-col pb-7">
+              <div className="flex flex-col pb-2 sm:pb-7">
                 <label className="mb-0.5 text-md">Precio:</label>
                 <input
                   className="flex-grow text-md bg-background-label text-black outline-0"
@@ -90,11 +90,11 @@ export default function Modal({ isOpen, onClose, sectionId }) {
             )}
 
             {priceType === "portion" && (
-              <div className="flex flex-col pb-7">
-                <div className="flex flex-wrap justify-center space-x-4 pb-7">
+              <div className="flex flex-col pb-2 sm:pb-7">
+                <div className="flex flex-wrap justify-center space-x-2 sm:space-x-4 pb-4 sm:pb-7">
                   {portionOptions.map((option) => (
                     <button
-                      className={`py-2 px-4 rounded text-sm sm:text-base md:text-base text-black w-auto ${
+                      className={`py-2 px-2 sm:px-4 rounded text-sm sm:text-base md:text-base text-black w-auto ${
                         portionType.includes(option)
                           ? "bg-gray-400 font-semibold hover:bg-gray-300"
                           : "bg-gray-background hover:bg-gray-300"
@@ -114,7 +114,7 @@ export default function Modal({ isOpen, onClose, sectionId }) {
                   ))}
                 </div>
                 {portionType.map((type) => (
-                  <div key={type} className="flex flex-col pb-7">
+                  <div key={type} className="flex flex-col pb-2 sm:pb-7">
                     <label className="mb-0.5 text-md">Precio ({type}):</label>
                     <input
                       className="flex-grow text-md bg-background-label text-black outline-0"
@@ -125,10 +125,16 @@ export default function Modal({ isOpen, onClose, sectionId }) {
               </div>
             )}
           </div>
-          <div className="flex justify-center">
+          <div className="flex justify-center space-x-4">
+            <button
+              onClick={onClose}
+              className="font-bold py-2 px-4 rounded text-sm text-white bg-red-500 hover:bg-red-400 active:bg-red-300 w-auto"
+            >
+              Cerrar
+            </button>
             <button
               type="submit"
-              className="font-bold py-2 px-4 rounded text-sm sm:text-base md:text-base text-white bg-green-button hover:bg-hover-button w-auto"
+              className="font-bold py-2 px-4 rounded text-sm text-white bg-green-button hover:bg-hover-button w-auto"
             >
               Guardar
             </button>

@@ -156,7 +156,11 @@ export default function Menu({ restaurantId }) {
                   </button>
                   <span className="ml-1">Añadir nuevo plato a la sección</span>
                   {isModalOpen && (
-                    <Modal isOpen={isModalOpen} onClose={closeModal} sectionId={section.id} />
+                    <Modal
+                      isOpen={isModalOpen}
+                      onClose={closeModal}
+                      sectionId={section.id}
+                    />
                   )}
                 </div>
               )}
