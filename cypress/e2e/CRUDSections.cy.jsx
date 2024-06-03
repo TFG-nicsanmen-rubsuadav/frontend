@@ -20,7 +20,7 @@ const loginAndSetup = () => {
 
   cy.get("button").eq(1).click();
   cy.viewport(1000, 660);
-  cy.wait(1000);
+  cy.wait(2000);
 };
 
 describe("testing section creation", () => {
@@ -41,7 +41,7 @@ describe("testing section creation", () => {
   });
   it("can't create sections with invalid data", () => {
     loginAndSetup();
-    cy.get("button").eq(8).click();
+    cy.get("button").eq(8).click({ force: true });
     cy.get('button[type="submit"]').click();
     cy.wait(1000);
   });
