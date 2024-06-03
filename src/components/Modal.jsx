@@ -53,8 +53,9 @@ export default function Modal({ onClose, sectionId, menuId, restaurantId }) {
     );
     switch (status) {
       case 201:
-        showSuccessAlert("Plato").then(() => {
+        showSuccessAlert("Plato creado exitosamente").then(() => {
           onClose();
+          window.location.reload();
         });
         break;
       case 400:
@@ -154,6 +155,7 @@ export default function Modal({ onClose, sectionId, menuId, restaurantId }) {
                   className="flex-grow text-md bg-background-label text-black outline-0"
                   type="number"
                   required
+                  step={0.01}
                   min={0}
                   value={uniquePrice}
                   onChange={(e) => setUniquePrice(e.target.value)}
@@ -189,6 +191,7 @@ export default function Modal({ onClose, sectionId, menuId, restaurantId }) {
                   <div key={type} className="flex flex-col pb-2 sm:pb-7">
                     <label className="mb-0.5 text-md">Precio ({type}):</label>
                     <input
+                      step={0.01}
                       className="flex-grow text-md bg-background-label text-black outline-0"
                       type="number"
                       min={0}
