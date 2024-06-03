@@ -1,12 +1,21 @@
 import PropTypes from "prop-types";
-import { allergensList } from "../utils/constants";
 import Select from "react-select";
 import { useState } from "react";
+
+// local imports
+import { allergensList } from "../utils/constants";
 import { fetchCreateDish } from "../api/endpoints";
 import { showErrorAlert, showSuccessAlert } from "../utils/alerts";
 import { getAllergens, validateDishPrices } from "../utils/helpers";
 
-export default function Modal({ onClose, sectionId, menuId, restaurantId }) {
+export default function Modal({
+  onClose,
+  sectionId,
+  menuId,
+  restaurantId,
+  dishId,
+}) {
+  console.log(dishId);
   const [form, setForm] = useState({
     name: "",
     description: "",
@@ -234,4 +243,5 @@ Modal.propTypes = {
   sectionId: PropTypes.string,
   menuId: PropTypes.string.isRequired,
   restaurantId: PropTypes.string.isRequired,
+  dishId: PropTypes.string,
 };

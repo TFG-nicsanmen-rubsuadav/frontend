@@ -21,10 +21,12 @@ export default function Menu({ restaurantId }) {
   const { isAuthenticated } = useAuthContext();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentSectionId, setCurrentSectionId] = useState(null);
+  const [currentDishId, setCurrentDishId] = useState(null);
 
   // MODAL FUNCTIONS
-  function openModal(sectionId) {
+  function openModal(sectionId, dishId) {
     setCurrentSectionId(sectionId);
+    setCurrentDishId(dishId);
     setIsModalOpen(true);
   }
 
@@ -46,10 +48,6 @@ export default function Menu({ restaurantId }) {
 
   function handleDeleteSection(sectionId) {
     console.log(`Deleting section ${sectionId}`);
-  }
-
-  function handleEditDish(sectionId, dishId) {
-    console.log(`Editing dish ${dishId} from section ${sectionId}`);
   }
 
   async function handleDeleteDish(sectionId, dishId) {
@@ -153,7 +151,7 @@ export default function Menu({ restaurantId }) {
                     {isAuthenticated && (
                       <>
                         <button
-                          onClick={() => handleEditDish(section.id, dish.id)}
+                          onClick={() => openModal(section.id, dish.id)}
                           className="p-1 rounded"
                         >
                           <PencilSquareIcon className="h-6 w-6 text-black hover:text-black hover:fill-active-button" />
@@ -184,6 +182,7 @@ export default function Menu({ restaurantId }) {
                       sectionId={currentSectionId}
                       menuId="zUKq6KT3LRmYAe2yLOCR"
                       restaurantId={restaurantId}
+                      dishId={currentDishId}
                     />
                   )}
                 </div>
