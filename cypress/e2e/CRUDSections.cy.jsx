@@ -26,7 +26,7 @@ const loginAndSetup = () => {
       )}`
     ).as("getRestaurantByUser");
   });
-  cy.wait("@getRestaurantByUser").then((interception) => {
+  cy.wait("@getRestaurantByUser", { timeout: 1500 }).then((interception) => {
     restaurantId = interception.response.body[0].id;
   });
 
