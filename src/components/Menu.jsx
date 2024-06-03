@@ -9,17 +9,19 @@ import {
 import { API_URL } from "../config";
 import { useAuthContext } from "../context/useAuthContext";
 import Modal from "./Modal";
-import { fetchDeleteDish } from "../api/endpoints";
+import { fetchDeleteDish, fetchDeleteSection } from "../api/endpoints";
 import {
   showAskAlert,
   showErrorAlert,
   showSuccessAlert,
 } from "../utils/alerts";
+import ModalSection from "./ModalSection";
 
 export default function Menu({ restaurantId }) {
   const [fullMenu, setFullMenu] = useState([]);
   const { isAuthenticated } = useAuthContext();
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isSectionModalOpen, setIsSectionModalOpen] = useState(false);
   const [currentSectionId, setCurrentSectionId] = useState(null);
   const [currentDishId, setCurrentDishId] = useState(null);
 
@@ -34,6 +36,15 @@ export default function Menu({ restaurantId }) {
     setIsModalOpen(false);
   }
 
+  function openSectionModal(sectionId) {
+    setIsSectionModalOpen(true);
+    setCurrentSectionId(sectionId);
+  }
+
+  function closeSectionModal() {
+    setIsSectionModalOpen(false);
+  }
+
   async function fetchFullMenu() {
     const response = await fetch(
       `${API_URL}/api/${restaurantId}/zUKq6KT3LRmYAe2yLOCR/fullMenu`
@@ -42,12 +53,29 @@ export default function Menu({ restaurantId }) {
     setFullMenu(data.sections);
   }
 
-  function handleEditSection(sectionId) {
-    console.log(`Editing section ${sectionId}`);
-  }
-
-  function handleDeleteSection(sectionId) {
-    console.log(`Deleting section ${sectionId}`);
+  async function handleDeleteSection(sectionId) {
+    const result = await showAskAlert(
+      "¿Estás seguro de que quieres eliminar esta sección?"
+    );
+    if (result.isConfirmed) {
+      const { status } = await fetchDeleteSection(
+        restaurantId,
+        "zUKq6KT3LRmYAe2yLOCR",
+        sectionId
+      );
+      switch (status) {
+        case 204:
+          showSuccessAlert("Sección eliminada correctamente");
+          window.location.reload();
+          break;
+        case 403:
+          localStorage.clear();
+          showErrorAlert("eliminar la sección").then(() => {
+            window.location.href = "/login";
+          });
+          break;
+      }
+    }
   }
 
   async function handleDeleteDish(sectionId, dishId) {
@@ -96,11 +124,19 @@ export default function Menu({ restaurantId }) {
                 {isAuthenticated && (
                   <div className="flex flex-row space-x-5 mr-4 ml-3">
                     <button
-                      onClick={() => handleEditSection(section.id)}
+                      onClick={() => openSectionModal(section.id)}
                       className="hover:fill-primary-green p-1 rounded"
                     >
                       <PencilSquareIcon className="h-6 w-6 text-black hover:text-black hover:fill-active-button" />
                     </button>
+                    {isSectionModalOpen && (
+                      <ModalSection
+                        onClose={closeSectionModal}
+                        sectionId={currentSectionId}
+                        menuId="zUKq6KT3LRmYAe2yLOCR"
+                        restaurantId={restaurantId}
+                      />
+                    )}
                     <button
                       onClick={() => handleDeleteSection(section.id)}
                       className="hover: rounded"

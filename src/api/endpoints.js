@@ -273,3 +273,65 @@ export async function fetchDeleteDish(restaurantId, menuId, sectionId, dishId) {
   );
   return { status: response.status };
 }
+
+// SECTIONS ENDPOINTS //
+export async function fetchSectionById(restaurantId, sectionId) {
+  const response = await fetch(
+    `${API_URL}/api/${restaurantId}/zUKq6KT3LRmYAe2yLOCR/showSection/${sectionId}`,
+    {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }
+  );
+
+  const data = await response.json();
+  return { data };
+}
+
+export async function fetchCreateSection(form, restaurantId) {
+  const response = await fetch(
+    `${API_URL}/api/${restaurantId}/zUKq6KT3LRmYAe2yLOCR/createSection`,
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `${localStorage.getItem("access_token")}`,
+      },
+      body: JSON.stringify(form),
+    }
+  );
+
+  return { status: response.status };
+}
+
+export async function fetchUpdateSection(form, restaurantId, sectionId) {
+  const response = await fetch(
+    `${API_URL}/api/${restaurantId}/zUKq6KT3LRmYAe2yLOCR/updateSection/${sectionId}`,
+    {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `${localStorage.getItem("access_token")}`,
+      },
+      body: JSON.stringify(form),
+    }
+  );
+
+  return { status: response.status };
+}
+
+export async function fetchDeleteSection(restaurantId, menuId, sectionId) {
+  const response = await fetch(
+    `${API_URL}/api/${restaurantId}/${menuId}/deleteSection/${sectionId}`,
+    {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `${localStorage.getItem("access_token")}`,
+      },
+    }
+  );
+  return { status: response.status };
+}

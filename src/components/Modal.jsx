@@ -177,35 +177,39 @@ export default function Modal({
               noOptionsMessage={() => "–"}
               onChange={onChangeAllergens}
             />
-            <div className="flex space-x-2 sm:space-x-4 pb-4 sm:pb-7 justify-center m-2 sm:m-8">
-              <button
-                className={`font-bold py-2 px-2 sm:px-4 rounded text-sm sm:text-base md:text-base text-white w-auto ${
-                  priceType === "unique"
-                    ? "bg-active-button"
-                    : "bg-green-button hover:bg-hover-button"
-                }`}
-                onClick={(e) => {
-                  e.preventDefault();
-                  setPriceType("unique");
-                }}
-              >
-                Precio Único
-              </button>
-              <button
-                className={`font-bold py-2 px-2 sm:px-4 rounded text-sm sm:text-base md:text-base text-white w-auto ${
-                  priceType === "rations"
-                    ? "bg-active-button"
-                    : "bg-green-button hover:bg-hover-button"
-                }`}
-                onClick={(e) => {
-                  e.preventDefault();
-                  setPriceType("rations");
-                }}
-              >
-                Precio por Ración
-              </button>
+            <div className="flex space-x-2 sm:space-x-4 pb-4 sm:pb-7 m-2 sm:m-8 flex-col">
+              <div className="flex space-x-2 sm:space-x-4 justify-center">
+                <button
+                  className={`font-bold py-2 px-2 sm:px-4 rounded text-sm sm:text-base md:text-base text-white w-auto ${
+                    priceType === "unique"
+                      ? "bg-active-button"
+                      : "bg-green-button hover:bg-hover-button"
+                  }`}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setPriceType("unique");
+                  }}
+                >
+                  Precio Único
+                </button>
+                <button
+                  className={`font-bold py-2 px-2 sm:px-4 rounded text-sm sm:text-base md:text-base text-white w-auto ${
+                    priceType === "rations"
+                      ? "bg-active-button"
+                      : "bg-green-button hover:bg-hover-button"
+                  }`}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setPriceType("rations");
+                  }}
+                >
+                  Precio por Ración
+                </button>
+              </div>
               {errors.price && (
-                <span className="text-red-500 text-sm">{errors.price}</span>
+                <span className="text-red-500 text-sm text-center mt-2">
+                  {errors.price}
+                </span>
               )}
             </div>
             {priceType === "unique" && (
