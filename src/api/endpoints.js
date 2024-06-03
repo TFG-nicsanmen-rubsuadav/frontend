@@ -210,6 +210,7 @@ export async function fetchUser(userId) {
   return data;
 }
 
+// DISHES ENDPOINTS //
 export async function fetchCreateDish(form, restaurantId, menuId, sectionId) {
   const response = await fetch(
     `${API_URL}/api/${restaurantId}/${menuId}/${sectionId}/createDish`,
@@ -225,4 +226,18 @@ export async function fetchCreateDish(form, restaurantId, menuId, sectionId) {
 
   const data = await response.json();
   return { status: response.status, data };
+}
+
+export async function fetchDeleteDish(restaurantId, menuId, sectionId, dishId) {
+  const response = await fetch(
+    `${API_URL}/api/${restaurantId}/${menuId}/${sectionId}/deleteDish/${dishId}`,
+    {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `${localStorage.getItem("access_token")}`,
+      },
+    }
+  );
+  return { status: response.status };
 }

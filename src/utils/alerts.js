@@ -13,7 +13,18 @@ export async function showSuccessAlert(text) {
   Swal.fire({
     icon: "success",
     title: "Éxito!",
-    text: `${text} creado con éxito.`,
+    text: `${text}`,
     timer: 3000,
+  });
+}
+
+export async function showAskAlert(text) {
+  return Swal.fire({
+    icon: "question",
+    title: "¿Estás seguro?",
+    text: `${text}`,
+    showCancelButton: true,
+    confirmButtonText: "Sí",
+    cancelButtonText: "No",
   });
 }

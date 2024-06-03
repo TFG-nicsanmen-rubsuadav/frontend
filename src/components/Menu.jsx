@@ -9,23 +9,27 @@ import {
 import { API_URL } from "../config";
 import { useAuthContext } from "../context/useAuthContext";
 import Modal from "./Modal";
+import { fetchDeleteDish } from "../api/endpoints";
+import {
+  showAskAlert,
+  showErrorAlert,
+  showSuccessAlert,
+} from "../utils/alerts";
 
 export default function Menu({ restaurantId }) {
   const [fullMenu, setFullMenu] = useState([]);
   const { isAuthenticated } = useAuthContext();
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [currentSectionId, setCurrentSectionId] = useState(null);
 
   // MODAL FUNCTIONS
-  function openModal() {
+  function openModal(sectionId) {
+    setCurrentSectionId(sectionId);
     setIsModalOpen(true);
   }
 
   function closeModal() {
     setIsModalOpen(false);
-  }
-
-  function handleCreateDish() {
-    openModal();
   }
 
   async function fetchFullMenu() {
@@ -44,12 +48,34 @@ export default function Menu({ restaurantId }) {
     console.log(`Deleting section ${sectionId}`);
   }
 
-  function handleEditDish(dishId) {
-    console.log(`Editing dish ${dishId}`);
+  function handleEditDish(sectionId, dishId) {
+    console.log(`Editing dish ${dishId} from section ${sectionId}`);
   }
 
-  function handleDeleteDish(dishId) {
-    console.log(`Deleting dish ${dishId}`);
+  async function handleDeleteDish(sectionId, dishId) {
+    const result = await showAskAlert(
+      "¿Estás seguro de que quieres eliminar este plato?"
+    );
+    if (result.isConfirmed) {
+      const { status } = await fetchDeleteDish(
+        restaurantId,
+        "zUKq6KT3LRmYAe2yLOCR",
+        sectionId,
+        dishId
+      );
+      switch (status) {
+        case 204:
+          showSuccessAlert("Plato eliminado correctamente");
+          window.location.reload();
+          break;
+        case 403:
+          localStorage.clear();
+          showErrorAlert("eliminar el plato").then(() => {
+            window.location.href = "/login";
+          });
+          break;
+      }
+    }
   }
 
   useEffect(() => {
@@ -127,13 +153,13 @@ export default function Menu({ restaurantId }) {
                     {isAuthenticated && (
                       <>
                         <button
-                          onClick={() => handleEditDish(dish.id)}
+                          onClick={() => handleEditDish(section.id, dish.id)}
                           className="p-1 rounded"
                         >
                           <PencilSquareIcon className="h-6 w-6 text-black hover:text-black hover:fill-active-button" />
                         </button>
                         <button
-                          onClick={() => handleDeleteDish(dish.id)}
+                          onClick={() => handleDeleteDish(section.id, dish.id)}
                           className="p-1rounded"
                         >
                           <TrashIcon className="h-6 w-6 text-black hover:text-black hover:fill-red-500" />
@@ -147,7 +173,7 @@ export default function Menu({ restaurantId }) {
                 <div className="flex items-center">
                   <button
                     className="focus:outline-none"
-                    onClick={() => handleCreateDish()}
+                    onClick={() => openModal(section.id)}
                   >
                     <PlusCircleIcon className="h-6 w-6 text-black hover:text-black hover:fill-active-button" />
                   </button>
@@ -155,7 +181,7 @@ export default function Menu({ restaurantId }) {
                   {isModalOpen && (
                     <Modal
                       onClose={closeModal}
-                      sectionId={section.id}
+                      sectionId={currentSectionId}
                       menuId="zUKq6KT3LRmYAe2yLOCR"
                       restaurantId={restaurantId}
                     />
