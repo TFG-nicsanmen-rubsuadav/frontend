@@ -16,19 +16,7 @@ const loginAndSetup = () => {
   cy.wait("@getNumberOfCities");
   cy.get("button").eq(0).click();
   cy.viewport("macbook-16");
-
-  let restaurantId;
-  cy.window().then((win) => {
-    cy.intercept(
-      "GET",
-      `/api/restaurant/restaurantByUser?userId=${win.localStorage.getItem(
-        "userId"
-      )}`
-    ).as("getRestaurantByUser");
-  });
-  cy.wait("@getRestaurantByUser", { timeout: 1500 }).then((interception) => {
-    restaurantId = interception.response.body[0].id;
-  });
+  cy.wait(2000);
 
   cy.get("button").eq(1).click();
   cy.viewport(1000, 660);
