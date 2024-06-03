@@ -18,6 +18,7 @@ export default function Modal({
   menuId,
   restaurantId,
   dishId,
+  setUpdate,
 }) {
   const [form, setForm] = useState({
     name: "",
@@ -47,7 +48,7 @@ export default function Modal({
   async function handleSuccess(message) {
     showSuccessAlert(message).then(() => {
       onClose();
-      window.location.reload();
+      setUpdate((prev) => !prev);
     });
   }
 
@@ -128,7 +129,7 @@ export default function Modal({
     if (dishId) {
       getDishyById();
     }
-  }, [dishId]);
+  }, [dishId, setUpdate]);
 
   const [priceType, setPriceType] = useState(null);
   const [rationsType, setPortionType] = useState([]);
@@ -299,4 +300,5 @@ Modal.propTypes = {
   menuId: PropTypes.string.isRequired,
   restaurantId: PropTypes.string.isRequired,
   dishId: PropTypes.string,
+  setUpdate: PropTypes.func.isRequired,
 };

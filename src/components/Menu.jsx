@@ -19,6 +19,7 @@ import ModalSection from "./ModalSection";
 
 export default function Menu({ restaurantId }) {
   const [fullMenu, setFullMenu] = useState([]);
+  const [update, setUpdate] = useState(false);
   const { isAuthenticated } = useAuthContext();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isSectionModalOpen, setIsSectionModalOpen] = useState(false);
@@ -92,7 +93,7 @@ export default function Menu({ restaurantId }) {
       switch (status) {
         case 204:
           showSuccessAlert("Plato eliminado correctamente");
-          window.location.reload();
+          setUpdate((prev) => !prev);
           break;
         case 403:
           localStorage.clear();
@@ -106,7 +107,7 @@ export default function Menu({ restaurantId }) {
 
   useEffect(() => {
     fetchFullMenu();
-  }, []);
+  }, [update]);
 
   return (
     <div className="flex flex-col rounded-xl bg-gray-background mx-4 mb-12">
@@ -133,8 +134,8 @@ export default function Menu({ restaurantId }) {
                       <ModalSection
                         onClose={closeSectionModal}
                         sectionId={currentSectionId}
-                        menuId="zUKq6KT3LRmYAe2yLOCR"
                         restaurantId={restaurantId}
+                        setUpdate={setUpdate}
                       />
                     )}
                     <button
@@ -219,6 +220,7 @@ export default function Menu({ restaurantId }) {
                       menuId="zUKq6KT3LRmYAe2yLOCR"
                       restaurantId={restaurantId}
                       dishId={currentDishId}
+                      setUpdate={setUpdate}
                     />
                   )}
                 </div>
