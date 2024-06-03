@@ -116,7 +116,7 @@ export default function Modal({
       available: data.available,
       allergens: data.allergens,
     });
-    setUniquePrice(data.price);
+    setUniquePrice(data.rations.default);
     setRationsPrices({
       tapa: data.rations.tapa,
       media: data.rations.media,
@@ -187,7 +187,6 @@ export default function Modal({
                 onClick={(e) => {
                   e.preventDefault();
                   setPriceType("unique");
-                  setUniquePrice(1);
                 }}
               >
                 Precio Único
