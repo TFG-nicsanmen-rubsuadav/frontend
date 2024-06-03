@@ -1,10 +1,14 @@
 import PropTypes from "prop-types";
 import Select from "react-select";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 // local imports
 import { allergensList } from "../utils/constants";
-import { fetchCreateDish } from "../api/endpoints";
+import {
+  fetchCreateDish,
+  fetchDishById,
+  fetchUpdateDish,
+} from "../api/endpoints";
 import { showErrorAlert, showSuccessAlert } from "../utils/alerts";
 import { getAllergens, validateDishPrices } from "../utils/helpers";
 
@@ -15,7 +19,6 @@ export default function Modal({
   restaurantId,
   dishId,
 }) {
-  console.log(dishId);
   const [form, setForm] = useState({
     name: "",
     description: "",
@@ -23,11 +26,11 @@ export default function Modal({
     allergens: [],
   });
   const [errors, setErrors] = useState({});
-  const [uniquePrice, setUniquePrice] = useState("");
+  const [uniquePrice, setUniquePrice] = useState(0);
   const [rationsPrices, setRationsPrices] = useState({
-    tapa: "",
-    media: "",
-    entera: "",
+    tapa: 0,
+    media: 0,
+    entera: 0,
   });
   const { name, description } = form;
 
@@ -39,6 +42,29 @@ export default function Modal({
 
   function onChangeAllergens(selected) {
     setForm((prev) => ({ ...prev, allergens: selected.map((s) => s.value) }));
+  }
+
+  async function handleSuccess(message) {
+    showSuccessAlert(message).then(() => {
+      onClose();
+      window.location.reload();
+    });
+  }
+
+  async function handleError(status) {
+    switch (status) {
+      case 400:
+        setErrors({ name: "El nombre es obligatorio" });
+        break;
+      case 403:
+        localStorage.clear();
+        showErrorAlert(
+          status === 400 ? "Actualizar platos" : "Crear platos"
+        ).then(() => {
+          window.location.href = "/login";
+        });
+        break;
+    }
   }
 
   async function handleSubmit(e) {
@@ -54,30 +80,55 @@ export default function Modal({
       return;
     }
     rations = validatedRations;
-    const { status } = await fetchCreateDish(
-      { ...form, rations },
-      restaurantId,
-      menuId,
-      sectionId
-    );
-    switch (status) {
-      case 201:
-        showSuccessAlert("Plato creado exitosamente").then(() => {
-          onClose();
-          window.location.reload();
-        });
-        break;
-      case 400:
-        setErrors({ name: "El nombre es obligatorio" });
-        break;
-      case 403:
-        localStorage.clear();
-        showErrorAlert("Crear platos").then(() => {
-          window.location.href = "/login";
-        });
-        break;
+    if (dishId) {
+      const { status } = await fetchUpdateDish(
+        { ...form, rations },
+        restaurantId,
+        sectionId,
+        dishId
+      );
+      if (status === 200) {
+        handleSuccess("Plato actualizado exitosamente");
+      } else {
+        handleError(status);
+      }
+    } else {
+      const { status } = await fetchCreateDish(
+        { ...form, rations },
+        restaurantId,
+        menuId,
+        sectionId
+      );
+      if (status === 201) {
+        handleSuccess("Plato creado exitosamente");
+      } else {
+        handleError(status);
+      }
     }
   }
+
+  //retrieving the dish by id
+  async function getDishyById() {
+    const { data } = await fetchDishById(restaurantId, sectionId, dishId);
+    setForm({
+      name: data.name,
+      description: data.description,
+      available: data.available,
+      allergens: data.allergens,
+    });
+    setUniquePrice(data.price);
+    setRationsPrices({
+      tapa: data.rations.tapa,
+      media: data.rations.media,
+      entera: data.rations.entera,
+    });
+  }
+
+  useEffect(() => {
+    if (dishId) {
+      getDishyById();
+    }
+  }, [dishId]);
 
   const [priceType, setPriceType] = useState(null);
   const [rationsType, setPortionType] = useState([]);
@@ -136,6 +187,7 @@ export default function Modal({
                 onClick={(e) => {
                   e.preventDefault();
                   setPriceType("unique");
+                  setUniquePrice(1);
                 }}
               >
                 Precio Único

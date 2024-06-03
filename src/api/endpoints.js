@@ -211,11 +211,43 @@ export async function fetchUser(userId) {
 }
 
 // DISHES ENDPOINTS //
+export async function fetchDishById(restaurantId, sectionId, dishId) {
+  const response = await fetch(
+    `${API_URL}/api/${restaurantId}/zUKq6KT3LRmYAe2yLOCR/${sectionId}/showDish/${dishId}`,
+    {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }
+  );
+
+  const data = await response.json();
+  return { data };
+}
+
 export async function fetchCreateDish(form, restaurantId, menuId, sectionId) {
   const response = await fetch(
     `${API_URL}/api/${restaurantId}/${menuId}/${sectionId}/createDish`,
     {
       method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `${localStorage.getItem("access_token")}`,
+      },
+      body: JSON.stringify(form),
+    }
+  );
+
+  const data = await response.json();
+  return { status: response.status, data };
+}
+
+export async function fetchUpdateDish(form, restaurantId, sectionId, dishId) {
+  const response = await fetch(
+    `${API_URL}/api/${restaurantId}/zUKq6KT3LRmYAe2yLOCR/${sectionId}/updateDish/${dishId}`,
+    {
+      method: "PATCH",
       headers: {
         "Content-Type": "application/json",
         Authorization: `${localStorage.getItem("access_token")}`,
