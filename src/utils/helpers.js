@@ -22,19 +22,12 @@ export function getAllergens() {
   }));
 }
 
-export function validateDishPrices(
-  priceType,
-  rations,
-  uniquePrice,
-  rationsPrices
-) {
+export function validateDishPrices(priceType, uniquePrice, rationsPrices) {
   if (priceType === "unique") {
-    rations = { default: uniquePrice };
-    return {};
+    return { rations: { default: uniquePrice }, errors: {} };
   } else if (priceType === "rations") {
-    rations = rationsPrices;
-    return {};
+    return { rations: rationsPrices, errors: {} };
   } else {
-    return { price: "Selecciona un tipo de precio" };
+    return { errors: { price: "Selecciona un tipo de precio" } };
   }
 }

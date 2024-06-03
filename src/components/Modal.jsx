@@ -34,13 +34,17 @@ export default function Modal({ onClose, sectionId, menuId, restaurantId }) {
 
   async function handleSubmit(e) {
     e.preventDefault();
-    let rations;
-    if (validateDishPrices(priceType, rations, uniquePrice, rationsPrices)) {
-      setErrors(
-        validateDishPrices(priceType, rations, uniquePrice, rationsPrices)
-      );
+    let rations = {};
+    const { rations: validatedRations, errors } = validateDishPrices(
+      priceType,
+      uniquePrice,
+      rationsPrices
+    );
+    if (Object.keys(errors).length > 0) {
+      setErrors(errors);
       return;
     }
+    rations = validatedRations;
     const { status } = await fetchCreateDish(
       { ...form, rations },
       restaurantId,
