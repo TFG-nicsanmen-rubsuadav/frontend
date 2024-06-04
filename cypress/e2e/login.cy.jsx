@@ -35,7 +35,11 @@ describe("LoginPage", () => {
     typeAndAssert('input[name="password"]', "@Password1");
     cy.get('button[type="submit"]').click();
     cy.wait("@loginApi");
-    cy.url().should("include", "/");
+    cy.intercept("GET", "/api/restaurants/numberOfCities").as(
+      "getNumberOfCities"
+    );
+    cy.wait("@getNumberOfCities", { timeout: 60000 });
+    cy.get('button').eq(1).click();
   });
 
   it("should show error when user not found", () => {

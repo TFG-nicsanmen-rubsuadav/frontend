@@ -1,0 +1,16 @@
+export const allergensList = [
+  "gluten",
+  "crustáceos",
+  "huevos",
+  "pescado",
+  "cacahuetes",
+  "soja",
+  "lácteos",
+  "frutos de cáscara",
+  "apio",
+  "mostaza",
+  "granos de sésamo",
+  "dióxido de azufre y sulfitos",
+  "altramuces",
+  "moluscos",
+];

@@ -76,7 +76,7 @@ export default function Dashboard() {
 
   return (
     <div className="flex flex-col md:flex-row">
-      <SideBar />
+      <SideBar restaurantId={restaurantId} />
       <div className="mt-5 sm:ml-5 w-full max-w-2xl mx-auto ">
         <div className="flex justify-between items-center">
           <h1 className="font-semibold ml-2 text-2xl">
