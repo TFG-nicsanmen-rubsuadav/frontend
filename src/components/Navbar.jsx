@@ -52,9 +52,12 @@ export default function Navbar() {
   return (
     <header className="text-white body-font bg-primary-green flex justify-between">
       <div className="mx-5 flex p-2 items-center">
-        <a className="flex title-font font-medium items-center text-gray-900 mb-4 md:mb-0 ">
+        <Link
+          className="flex title-font font-medium items-center text-gray-900 mb-4 md:mb-0"
+          to={"/"}
+        >
           <img src={logo} alt="Logo" className="w-20 h-20" />
-        </a>
+        </Link>
       </div>
       <div className="mx-5 flex p-2 items-center">
         <nav className="md:ml-4 md:py-1 md:pl-4 text-base">{buttons}</nav>

@@ -5,6 +5,7 @@ import { PhoneIcon, MapPinIcon } from "@heroicons/react/24/outline";
 // local imports
 import { API_URL } from "../config";
 import Button from "../components/Button";
+import Ratings from "../components/Ratings";
 
 export default function RestaurantPage() {
   const [restaurant, setRestaurant] = useState({});
@@ -44,7 +45,7 @@ export default function RestaurantPage() {
         text={<Link to={`/${restaurant.id}/menu`}>Nuestra carta</Link>}
       />
       <Button className="mt-12" type="button" text="Carta en imágenes" />
-      <Button className="mt-12" type="button" text="Valoraciones" />
+      <Ratings restaurantId={restaurantId} />
       <div className="mt-12 flex flex-col items-center">
         <div className="flex items-center justify-center">
           <MapPinIcon className="h-6 w-6 text-primary-yellow " />
