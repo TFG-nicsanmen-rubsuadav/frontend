@@ -14,17 +14,8 @@ const loginAndSetup = () => {
     "getNumberOfCities"
   );
   cy.wait("@getNumberOfCities");
-  cy.get("button").eq(0).click();
-  cy.viewport("macbook-16");
-  cy.window().then((win) => {
-    const userId = win.localStorage.getItem("userId");
-    cy.intercept("GET", `/api/restaurant/restaurantByUser?userId=${userId}`).as(
-      "getRestaurantByUser"
-    );
-  });
-  cy.wait("@getRestaurantByUser");
-  cy.get("button").eq(1).click();
-  cy.viewport(1000, 660);
+  cy.visit("http://localhost:5173/3bdGxrc3e1yFzHcVGw5Y/menu")
+  cy.wait(2000);
 };
 
 describe("testing section creation", () => {
