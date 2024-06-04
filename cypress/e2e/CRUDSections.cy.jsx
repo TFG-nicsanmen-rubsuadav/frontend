@@ -21,7 +21,16 @@ const loginAndSetup = () => {
 describe("testing section creation", () => {
   it("can create sections", () => {
     loginAndSetup();
-    cy.wait(8000);
+    cy.wait(2000);
+    cy.contains("Bebidas")
+      .parent("div")
+      .nextUntil("span[class='ml-1']")
+      .contains("Añadir nueva sección");
+    cy.wait(2000);
+    cy.contains("Añadir nueva sección").prev("button").click();
+    cy.get('input[name="name"]').type("Seccion de prueba");
+    cy.get('button[type="submit"]').click();
+    cy.wait(2000);
   });
   it("can't create sections with invalid data", () => {
     loginAndSetup();
@@ -32,17 +41,44 @@ describe("testing section creation", () => {
   });
 });
 
-// describe("testing section update", () => {
-//   it("can update sections", () => {
-//     loginAndSetup();
-//     cy.wait(2000);
-//     // navigate to the section
-//     cy.get("button", { timeout: 10000 })
-//       .eq(7)
-//       .click({ force: true, multiple: true });
-//     cy.scrollTo("bottom");
-//     // open the section modal
-//     cy.get("button").eq(6).click();
-//     // CONTINUE
-//   });
-// });
+describe("testing section update", () => {
+  it("can update sections", () => {
+    loginAndSetup();
+    cy.contains("Seccion de prueba")
+      .parent()
+      .within(() => {
+        cy.get("button").click();
+      });
+    cy.scrollTo("bottom");
+    cy.wait(2000);
+    cy.get("div[id='Seccion de prueba']").within(() => {
+      cy.get("button").eq(0).click();
+    });
+    cy.wait(2000);
+    cy.get('input[name="name"]')
+      .first()
+      .clear({ force: true })
+      .type("Actualizada", { force: true });
+    cy.get('button[type="submit"]').first().click({ force: true });
+    cy.wait(2000);
+    cy.scrollTo("bottom");
+  });
+});
+describe("testing section deletion", () => {
+  it("can delete sections", () => {
+    loginAndSetup();
+    cy.contains("Actualizada")
+      .parent()
+      .within(() => {
+        cy.get("button").click();
+      });
+    cy.scrollTo("bottom");
+    cy.wait(2000);
+    cy.get("div[id='Actualizada']").within(() => {
+      cy.get("button").eq(1).click();
+    });
+    cy.wait(2000);
+    cy.get("button").contains("Sí").click();
+    cy.wait(2000);
+  });
+});
