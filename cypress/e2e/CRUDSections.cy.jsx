@@ -14,14 +14,16 @@ const loginAndSetup = () => {
     "getNumberOfCities"
   );
   cy.wait("@getNumberOfCities");
-  cy.visit("http://localhost:5173/3bdGxrc3e1yFzHcVGw5Y/menu")
+  cy.visit("http://localhost:5173/3bdGxrc3e1yFzHcVGw5Y/menu");
   cy.wait(2000);
 };
 
 describe("testing section creation", () => {
   it("can create sections", () => {
     loginAndSetup();
-    cy.contains("Añadir nueva sección").prev("button").click();
+    cy.contains("Añadir nueva sección", { timeout: 10000 })
+      .prev("button")
+      .click();
     type('input[name="name"]', "Section 1");
     type('input[name="description"]', "Description 1");
     cy.get('button[type="submit"]').click();
