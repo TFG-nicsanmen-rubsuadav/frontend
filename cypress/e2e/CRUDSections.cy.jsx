@@ -21,16 +21,16 @@ const loginAndSetup = () => {
 describe("testing section creation", () => {
   it("can create sections", () => {
     loginAndSetup();
-    cy.wait(2000);
+    cy.wait(6000);
     cy.contains("Bebidas")
       .parent("div")
-      .nextUntil("span[class='ml-1']")
+      .nextUntil("span.ml-1")
       .contains("Añadir nueva sección");
-    cy.wait(2000);
+    cy.wait(4000);
     cy.contains("Añadir nueva sección").prev("button").click();
     cy.get('input[name="name"]').type("Seccion de prueba");
     cy.get('button[type="submit"]').click();
-    cy.wait(2000);
+    cy.wait(4000);
   });
   it("can't create sections with invalid data", () => {
     loginAndSetup();
