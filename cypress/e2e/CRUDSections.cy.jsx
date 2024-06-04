@@ -21,7 +21,13 @@ const loginAndSetup = () => {
 describe("testing section creation", () => {
   it("can create sections", () => {
     loginAndSetup();
-    cy.wait(6000);
+    cy.wait(8000);
+    cy.contains("Añadir nueva sección").prev("button").click();
+    type('input[name="name"]', "Test Section");
+    type('input[name="description"]', "Test Description");
+    cy.get('button[type="submit"]').click();
+    cy.wait(2000);
+    cy.scrollTo("bottom");
   });
   it("can't create sections with invalid data", () => {
     loginAndSetup();
