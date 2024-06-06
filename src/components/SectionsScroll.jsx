@@ -47,6 +47,7 @@ export default function SectionsScroll({ restaurantId }) {
         {isAuthenticated && (
           <div className="flex items-center">
             <button
+              id="addSectionButton"
               className="focus:outline-none"
               onClick={() => openSectionModal()}
             >

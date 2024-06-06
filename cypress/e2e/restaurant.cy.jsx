@@ -35,8 +35,10 @@ describe("showing the restaurant/menu component", () => {
     cy.get("button").should("exist");
     cy.get("img").should("exist");
     cy.get("p").should("exist");
+    cy.wait(1000);
     // showing the restaurant menu
     cy.get("button").eq(0).click();
+    cy.wait(1000);
     cy.get("button").should("exist");
     cy.get("h2").should("exist");
     cy.get("span").should("exist");
