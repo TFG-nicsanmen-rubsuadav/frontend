@@ -335,3 +335,33 @@ export async function fetchDeleteSection(restaurantId, menuId, sectionId) {
   );
   return { status: response.status };
 }
+
+export async function fetchUpdateRestaurantCount(restaurantId) {
+  const response = await fetch(
+    `${API_URL}/api/restaurant/${restaurantId}/updateCount`,
+    {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }
+  );
+
+  const data = await response.json();
+  return data;
+}
+
+export async function fetchGetRestaurantCount(restaurantId) {
+  const response = await fetch(
+    `${API_URL}/api/restaurant/${restaurantId}/getCount`,
+    {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }
+  );
+
+  const data = await response.json();
+  return data;
+}
