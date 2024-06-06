@@ -33,7 +33,7 @@ export default function Ratings({ restaurantId }) {
     <>
       {ratingsVisible && (
         <Button
-          className="mt-12"
+          className="mt-8"
           type="button"
           text="Ocultar Valoraciones"
           onClick={() => {
@@ -43,10 +43,10 @@ export default function Ratings({ restaurantId }) {
           }}
         />
       )}
-      <div className="w-full overflow-auto flex flex-col items-center space-y-10">
+      <div className="overflow-auto flex flex-col items-center my-10 sm:w-full mx-2 sm:mx-0">
         {!ratingsLoaded ? (
           <Button
-            className="mt-12"
+            className=""
             type="button"
             text="Valoraciones"
             onClick={() => {
