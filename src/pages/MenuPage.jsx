@@ -9,7 +9,7 @@ export default function MenuPage() {
   const { restaurantId } = useParams();
   return (
     <div>
-      <Navbar />
+      <Navbar restaurantId={restaurantId} />
       <div className="mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
         <SectionsScroll restaurantId={restaurantId} />
       </div>

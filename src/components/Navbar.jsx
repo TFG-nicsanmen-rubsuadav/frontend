@@ -1,11 +1,13 @@
 import logo from "../assets/logo-yellow.png";
 import { useAuthContext } from "../context/useAuthContext";
-import { Link } from "react-router-dom";
+import { Link, useMatch } from "react-router-dom";
 
-export default function Navbar() {
+export default function Navbar({ restaurantId }) {
   const { isAuthenticated } = useAuthContext();
   const role = localStorage.getItem("role");
   let buttons;
+
+  const match = useMatch("/:restaurantId/menu");
 
   function handleLogout() {
     localStorage.clear();
@@ -21,9 +23,14 @@ export default function Navbar() {
         <button className="inline-flex items-center bg-green-button border-0 py-3 px-3 mx-4 focus:outline-none hover:bg-hover-button active:bg-active-button rounded text-base font-semibold md:mt-0">
           <Link to="/registro">Registro</Link>
         </button>
-        <button className="inline-flex items-center bg-green-button border-0 py-3 px-3 mx-4 focus:outline-none hover:bg-hover-button active:bg-active-button rounded text-base font-semibold md:mt-0">
-          Valoraciones
-        </button>
+        {match && (
+          <Link
+            to={`/restaurant/${restaurantId}`}
+            className="inline-flex items-center bg-green-button border-0 py-3 px-3 mx-4 focus:outline-none hover:bg-hover-button active:bg-active-button rounded text-base font-semibold md:mt-0"
+          >
+            Información
+          </Link>
+        )}
       </div>
     );
   }
@@ -42,9 +49,14 @@ export default function Navbar() {
         >
           Cerrar sesión
         </button>
-        <button className="inline-flex items-center bg-green-button border-0 py-3 px-3 mx-4 focus:outline-none hover:bg-hover-button active:bg-active-button rounded text-base font-semibold md:mt-0">
-          Valoraciones
-        </button>
+        {match && (
+          <Link
+            to={`/restaurant/${restaurantId}`}
+            className="inline-flex items-center bg-green-button border-0 py-3 px-3 mx-4 focus:outline-none hover:bg-hover-button active:bg-active-button rounded text-base font-semibold md:mt-0"
+          >
+            Restaurante
+          </Link>
+        )}
       </div>
     );
   }
