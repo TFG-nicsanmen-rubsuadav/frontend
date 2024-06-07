@@ -37,6 +37,10 @@ describe("testing dashboard page", () => {
       ).as("visitsByDate");
       cy.wait(2000);
       cy.get("select").select(1);
+
+      cy.viewport("macbook-11")
+      cy.get("button").eq(2).click();
+      cy.wait(2000);
     });
   });
   it("can't navigate to the dashboard page cause isn't login", () => {

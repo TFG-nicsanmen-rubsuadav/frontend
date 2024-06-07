@@ -26,5 +26,5 @@ export default function ConfigurationModal({ closeModal }) {
 }
 
 ConfigurationModal.propTypes = {
-  onClose: PropTypes.func.isRequired,
+  closeModal: PropTypes.func.isRequired,
 };

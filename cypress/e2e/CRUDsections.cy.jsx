@@ -41,6 +41,7 @@ describe("testing section creation", () => {
 describe("testing section update", () => {
   it("can update sections", () => {
     loginAndSetup();
+    cy.wait(2000);
     cy.contains("Seccion de prueba")
       .parent()
       .within(() => {
@@ -64,6 +65,7 @@ describe("testing section update", () => {
 describe("testing section deletion", () => {
   it("can delete sections", () => {
     loginAndSetup();
+    cy.wait(2000);
     cy.contains("Actualizada")
       .parent()
       .within(() => {

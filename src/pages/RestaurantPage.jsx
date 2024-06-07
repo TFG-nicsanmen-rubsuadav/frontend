@@ -6,7 +6,10 @@ import { PhoneIcon, MapPinIcon } from "@heroicons/react/24/outline";
 import { API_URL } from "../config";
 import Button from "../components/Button";
 import Ratings from "../components/Ratings";
-import { fetchGetRestaurantCount, fetchUpdateRestaurantCount } from "../api/endpoints";
+import {
+  fetchGetRestaurantCount,
+  fetchUpdateRestaurantCount,
+} from "../api/endpoints";
 
 export default function RestaurantPage() {
   const [restaurant, setRestaurant] = useState({});
@@ -61,10 +64,19 @@ export default function RestaurantPage() {
         />
       ) : (
         <>
-          <Button onClick={onClick} type="button" text="Quiero conocer el menú" />
-          <div className="flex items-center justify-center mt-4 text-white">
-            <span className="text-primary-yellow font-bold mr-1">{ getCount }</span> personas quieren conocer tu menú
-          </div>
+          <Button
+            onClick={onClick}
+            type="button"
+            text="Quiero conocer el menú"
+          />
+          {getCount && (
+            <div className="flex items-center justify-center mt-4 text-white">
+              <span className="text-primary-yellow font-bold mr-1">
+                {getCount}
+              </span>
+              personas quieren conocer tu menú
+            </div>
+          )}
         </>
       )}
 

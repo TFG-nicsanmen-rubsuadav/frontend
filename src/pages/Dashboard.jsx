@@ -121,7 +121,6 @@ export default function Dashboard() {
             <div className="w-full max-w-xs sm:max-w-md md:max-w-lg lg:max-w-xl">
               <ConfigurationModal
                 closeModal={closeModal}
-                onClick={(e) => e.stopPropagation()}
               />
             </div>
           </div>

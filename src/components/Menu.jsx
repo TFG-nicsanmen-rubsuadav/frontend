@@ -188,12 +188,14 @@ export default function Menu({ restaurantId }) {
                     {isAuthenticated && (
                       <>
                         <button
+                          id="editDishButton"
                           onClick={() => openModal(section.id, dish.id)}
                           className="p-1 rounded"
                         >
                           <PencilSquareIcon className="h-6 w-6 text-black hover:text-black hover:fill-active-button" />
                         </button>
                         <button
+                          id="deleteDishButton"
                           onClick={() => handleDeleteDish(section.id, dish.id)}
                           className="p-1rounded"
                         >
@@ -205,7 +207,7 @@ export default function Menu({ restaurantId }) {
                 </div>
               ))}
               {isAuthenticated && (
-                <div className="flex items-center">
+                <div className="flex items-center" id="addDishButton">
                   <button
                     className="focus:outline-none"
                     onClick={() => openModal(section.id)}

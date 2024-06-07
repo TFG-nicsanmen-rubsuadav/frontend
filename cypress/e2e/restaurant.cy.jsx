@@ -46,3 +46,11 @@ describe("showing the restaurant/menu component", () => {
     cy.get("p").should("exist");
   });
 });
+
+describe("requesting the restaurant menu", () => {
+  it("should click 'knowing the restaurant menu button'",() => {
+    const restaurantId = "vChGiVL4ZKKpXQaimrI0";
+    cy.visit(`http://localhost:5173/restaurant/${restaurantId}`);
+    cy.get("button").eq(0).click();
+  })
+})
