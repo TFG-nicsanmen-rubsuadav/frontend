@@ -14,9 +14,7 @@ const loginAndSetup = () => {
   cy.get('button[type="submit"]').click();
   cy.intercept(HTTP_METHOD, API_ENDPOINT).as("loginApi");
   cy.wait(2000);
-  cy.intercept("GET", "/api/restaurants/numberOfCities").as(
-    "getNumberOfCities"
-  );
+  cy.intercept("GET", "/scraping-data").as("getData");
   cy.visit("http://localhost:5173/3bdGxrc3e1yFzHcVGw5Y/menu");
   cy.wait(2000);
 };

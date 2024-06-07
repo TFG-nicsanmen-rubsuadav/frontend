@@ -8,11 +8,7 @@ import {
 // local imports
 import SearchBar from "../components/SearchBar";
 import Navbar from "../components/Navbar";
-import {
-  fetchNumberOfCities,
-  fetchNumberOfOpinions,
-  fetchNumberOfRestaurants,
-} from "../api/endpoints";
+import { fetchScrapingData } from "../api/endpoints";
 import SR from "../components/SR";
 
 export default function LandingPage() {
@@ -21,12 +17,10 @@ export default function LandingPage() {
   const [opinions, setOpinions] = useState({});
 
   async function fetchAllData() {
-    const restaurants = await fetchNumberOfRestaurants();
-    setRestaurants(restaurants);
-    const cities = await fetchNumberOfCities();
-    setCities(cities);
-    const opinions = await fetchNumberOfOpinions();
-    setOpinions(opinions);
+    const data = await fetchScrapingData();
+    setRestaurants(data);
+    setCities(data);
+    setOpinions(data);
   }
 
   useEffect(() => {
@@ -43,26 +37,22 @@ export default function LandingPage() {
           <div className="bg-bg-custom rounded-xl shadow-md flex flex-col items-center justify-center h-32 w-full sm:w-44">
             <BuildingOffice2Icon className="h-10 w-10" />
             <h1 className="font-bold text-3xl text-center">
-              {restaurants.numberOfRestaurants}
+              {restaurants.restaurants}
             </h1>
             <h3 className="text-sm font-semibold">RESTAURANTES</h3>
           </div>
           <div className="bg-bg-custom rounded-xl shadow-md flex flex-col items-center justify-center h-32 w-full sm:w-40">
             <MapPinIcon className="h-10 w-10" />
-            <h1 className="font-bold text-3xl text-center">
-              {cities.numberOfCities}
-            </h1>
+            <h1 className="font-bold text-3xl text-center">{cities.cities}</h1>
             <h3 className="text-sm font-semibold">CIUDADES</h3>
           </div>
-          {opinions.numberOfOpinions && (
-            <div className="bg-bg-custom rounded-xl shadow-md flex flex-col items-center justify-center h-32 w-full sm:w-40">
-              <ChatBubbleOvalLeftEllipsisIcon className="h-10 w-10" />
-              <h1 className="font-bold text-3xl text-center">
-                {opinions.numberOfOpinions}
-              </h1>
-              <h3 className="text-sm font-semibold">OPINIONES</h3>
-            </div>
-          )}
+          <div className="bg-bg-custom rounded-xl shadow-md flex flex-col items-center justify-center h-32 w-full sm:w-40">
+            <ChatBubbleOvalLeftEllipsisIcon className="h-10 w-10" />
+            <h1 className="font-bold text-3xl text-center">
+              {opinions.opinions}
+            </h1>
+            <h3 className="text-sm font-semibold">OPINIONES</h3>
+          </div>
         </div>
       </div>
     </div>

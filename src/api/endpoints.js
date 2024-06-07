@@ -50,20 +50,8 @@ export async function fetchRestaurant(id) {
   return data;
 }
 
-export async function fetchNumberOfRestaurants() {
-  const response = await fetch(`${API_URL}/api/restaurants/count`, {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-    },
-  });
-
-  const data = await response.json();
-  return data;
-}
-
-export async function fetchNumberOfCities() {
-  const response = await fetch(`${API_URL}/api/restaurants/numberOfCities`, {
+export async function fetchScrapingData() {
+  const response = await fetch(`${API_URL}/scraping-data`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
@@ -76,18 +64,6 @@ export async function fetchNumberOfCities() {
 
 export async function fetchAllCities() {
   const response = await fetch(`${API_URL}/api/restaurants/cities`, {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-    },
-  });
-
-  const data = await response.json();
-  return data;
-}
-
-export async function fetchNumberOfOpinions() {
-  const response = await fetch(`${API_URL}/api/restaurants/numberOfOpinions`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",

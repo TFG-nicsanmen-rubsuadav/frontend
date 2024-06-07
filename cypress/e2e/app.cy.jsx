@@ -2,15 +2,9 @@
 
 describe("rendering App component", () => {
   beforeEach(() => {
-    cy.intercept("GET", "/api/restaurants/numberOfCities").as(
-      "getNumberOfCities"
-    );
-    cy.intercept("GET", "/api/restaurants/numberOfOpinions").as(
-      "getNumberOfOpinions"
-    );
+    cy.intercept("GET", "/scraping-data").as("getData");
     cy.visit("http://localhost:5173/");
-    cy.wait("@getNumberOfCities");
-    cy.wait("@getNumberOfOpinions");
+    cy.wait(2000);
 
     cy.get("h1").should("be.visible");
     cy.get("h3").should("be.visible");

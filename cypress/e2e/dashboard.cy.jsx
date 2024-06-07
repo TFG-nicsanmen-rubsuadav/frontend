@@ -11,10 +11,8 @@ describe("testing dashboard page", () => {
     type('input[name="email"]', "you@gmail.com");
     type('input[name="password"]', "@Password1");
     cy.get('button[type="submit"]').click();
-    cy.intercept("GET", "/api/restaurants/numberOfCities").as(
-      "getNumberOfCities"
-    );
-    cy.wait("@getNumberOfCities");
+    cy.intercept("GET", "/scraping-data").as("getData");
+    cy.wait(2000);
     cy.get("button").eq(0).click();
     cy.window().then((win) => {
       cy.intercept(
