@@ -138,7 +138,7 @@ export default function Modal({
   return (
     <div className="fixed inset-0 flex items-center justify-center">
       <div className="modal-content rounded-md px-4 sm:px-20 py-4 sm:py-16 bg-gray-label w-full sm:w-1/2 h-full sm:h-1/2 max-h-full overflow-y-auto">
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} id="modal">
           <div className="flex flex-col pb-2 sm:pb-7">
             <label className="mb-0.5 text-md">Nombre:</label>
             <input
@@ -177,10 +177,12 @@ export default function Modal({
               placeholder={`Hay ${allergensList.length}, puedes seleccionar todos los que apliquen o ninguno si no aplica`}
               noOptionsMessage={() => "–"}
               onChange={onChangeAllergens}
+              id="allergens"
             />
             <div className="flex space-x-2 sm:space-x-4 pb-4 sm:pb-7 m-2 sm:m-8 flex-col">
               <div className="flex space-x-2 sm:space-x-4 justify-center">
                 <button
+                  id="unique"
                   className={`font-bold py-2 px-2 sm:px-4 rounded text-sm sm:text-base md:text-base text-white w-auto ${
                     priceType === "unique"
                       ? "bg-active-button"
@@ -194,6 +196,7 @@ export default function Modal({
                   Precio Único
                 </button>
                 <button
+                  id="rations"
                   className={`font-bold py-2 px-2 sm:px-4 rounded text-sm sm:text-base md:text-base text-white w-auto ${
                     priceType === "rations"
                       ? "bg-active-button"
@@ -233,6 +236,7 @@ export default function Modal({
                 <div className="flex flex-wrap justify-center space-x-2 sm:space-x-4 pb-4 sm:pb-7">
                   {rationsOptions.map((option) => (
                     <button
+                      id="rationsButtons"
                       className={`py-2 px-2 sm:px-4 rounded text-sm sm:text-base md:text-base text-black w-auto ${
                         rationsType.includes(option)
                           ? "bg-gray-400 font-semibold hover:bg-gray-300"

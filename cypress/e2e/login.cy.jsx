@@ -35,10 +35,8 @@ describe("LoginPage", () => {
     typeAndAssert('input[name="password"]', "@Password1");
     cy.get('button[type="submit"]').click();
     cy.wait("@loginApi");
-    cy.intercept("GET", "/api/restaurants/numberOfCities").as(
-      "getNumberOfCities"
-    );
-    cy.wait("@getNumberOfCities", { timeout: 60000 });
+    cy.intercept("GET", "/scraping-data").as("getData");
+    cy.wait(2000);
     cy.get('button').eq(1).click();
   });
 

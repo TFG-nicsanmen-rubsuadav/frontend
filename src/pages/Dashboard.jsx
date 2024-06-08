@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 
 // local imports
 import SideBar from "../components/SideBar";
+import ConfigurationModal from "../components/ConfigurationModal";
 import {
   fetchTotalVisits,
   fetchVisitsByDate,
@@ -17,6 +18,15 @@ export default function Dashboard() {
   const userId = localStorage.getItem("userId");
   const [range, setRange] = useState(7);
   const [restaurant, setRestaurant] = useState({});
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  function openModal() {
+    setIsModalOpen(true);
+  }
+
+  function closeModal() {
+    setIsModalOpen(false);
+  }
 
   async function getRestaurantByUserId() {
     const response = await fetchRestaurantByUserId(userId);
@@ -76,7 +86,7 @@ export default function Dashboard() {
 
   return (
     <div className="flex flex-col md:flex-row">
-      <SideBar restaurantId={restaurantId} />
+      <SideBar restaurantId={restaurantId} openModal={openModal} />
       <div className="mt-5 sm:ml-5 w-full max-w-2xl mx-auto ">
         <div className="flex justify-between items-center">
           <h1 className="font-semibold ml-2 text-2xl">
@@ -103,6 +113,18 @@ export default function Dashboard() {
             Número de visitas totales: {totalVisits.totalVisits}
           </h1>
         </div>
+        {isModalOpen && (
+          <div
+            className="fixed inset-0 flex items-center justify-center z-10"
+            onClick={closeModal}
+          >
+            <div className="w-full max-w-xs sm:max-w-md md:max-w-lg lg:max-w-xl">
+              <ConfigurationModal
+                closeModal={closeModal}
+              />
+            </div>
+          </div>
+        )}
         <div className="w-full">
           <LineChar
             arrayData={rangeArray}

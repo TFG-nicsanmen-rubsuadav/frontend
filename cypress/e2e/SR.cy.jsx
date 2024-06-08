@@ -12,7 +12,7 @@ describe("testing SR", () => {
     cy.get('button[type="submit"]').click();
   });
   it("can recommend restaurants", () => {
-    cy.get("button").eq(3).click();
+    cy.get("button").eq(2).click();
     cy.intercept("GET", "/api/recommendations").as("recommendations");
     cy.wait("@recommendations");
     cy.get('div[title^="/restaurant/"]').first().click();

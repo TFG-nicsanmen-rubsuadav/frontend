@@ -11,34 +11,34 @@ describe("testing dashboard page", () => {
     type('input[name="email"]', "you@gmail.com");
     type('input[name="password"]', "@Password1");
     cy.get('button[type="submit"]').click();
-    cy.intercept("GET", "/api/restaurants/numberOfCities").as(
-      "getNumberOfCities"
-    );
-    cy.wait("@getNumberOfCities");
+    cy.intercept("GET", "/scraping-data").as("getData");
+    cy.wait(2000);
     cy.get("button").eq(0).click();
     cy.window().then((win) => {
-      // getRestaurantByUser
       cy.intercept(
         "GET",
         `/api/restaurant/restaurantByUser?userId=${win.localStorage.getItem(
           "userId"
         )}`
-      ).then((restaurantId) => {
-        // getRestaurantById
-        cy.intercept("GET", `/api/restaurant/${restaurantId}`).then(() => {
-          // getTotalVisits
-          cy.intercept("GET", `/api/restaurant/${restaurantId}/visits`).then(
-            () => {
-              const date = cy.get("select").select(0);
-              // getVisitsByDate
-              cy.intercept(
-                "GET",
-                `/api/restaurant/${restaurantId}/visitsByDate?date=${date}`
-              ).as("visitsByDate");
-            }
-          );
-        });
-      });
+      ).as("restaurantByUser");
+    });
+    cy.wait("@restaurantByUser").then((restaurantId) => {
+      cy.intercept("GET", `/api/restaurant/${restaurantId}`);
+      cy.intercept("GET", `/api/restaurant/${restaurantId}/visits`).as(
+        "totalVisits"
+      );
+      cy.wait(2000);
+      const date = cy.get("select").select(0);
+      cy.intercept(
+        "GET",
+        `/api/restaurant/${restaurantId}/visitsByDate?date=${date}`
+      ).as("visitsByDate");
+      cy.wait(2000);
+      cy.get("select").select(1);
+
+      cy.viewport("macbook-11")
+      cy.get("button").eq(2).click();
+      cy.wait(2000);
     });
   });
   it("can't navigate to the dashboard page cause isn't login", () => {
