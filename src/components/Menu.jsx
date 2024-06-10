@@ -16,6 +16,7 @@ import {
   showSuccessAlert,
 } from "../utils/alerts";
 import ModalSection from "./ModalSection";
+import AllergenImage from "./AllergenImage";
 
 export default function Menu({ restaurantId }) {
   const [fullMenu, setFullMenu] = useState([]);
@@ -154,6 +155,18 @@ export default function Menu({ restaurantId }) {
                     <span className="text-sm font-normal ml-5">
                       {dish.description}
                     </span>
+                    {dish.allergens.length > 0 && (
+                      <div className="flex flex-row space-x-2 ml-5">
+                        {dish.allergens.map((allergen) => (
+                          <div
+                            key={allergen}
+                            className="flex flex-col items-center"
+                          >
+                            <AllergenImage allergenName={allergen} />
+                          </div>
+                        ))}
+                      </div>
+                    )}
                   </div>
                   <div className="flex flex-row space-x-5 mr-4 ml-3">
                     {dish.rations.tapa && (

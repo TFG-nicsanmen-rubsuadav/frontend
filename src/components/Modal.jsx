@@ -178,6 +178,8 @@ export default function Modal({
               noOptionsMessage={() => "–"}
               onChange={onChangeAllergens}
               id="allergens"
+              name="allergens"
+              value={form.allergens.map((a) => ({ value: a, label: a }))}
             />
             <div className="flex space-x-2 sm:space-x-4 pb-4 sm:pb-7 m-2 sm:m-8 flex-col">
               <div className="flex space-x-2 sm:space-x-4 justify-center">
