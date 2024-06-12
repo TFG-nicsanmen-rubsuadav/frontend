@@ -10,6 +10,9 @@ import {
   fetchGetRestaurantCount,
   fetchUpdateRestaurantCount,
 } from "../api/endpoints";
+import delivery from "../assets/delivery.png";
+import takeAway from "../assets/take-away.png";
+import terrace from "../assets/terrace.png";
 
 export default function RestaurantPage() {
   const [restaurant, setRestaurant] = useState({});
@@ -54,9 +57,32 @@ export default function RestaurantPage() {
         alt="Restaurant"
         className="mb-6 rounded-full object-cover w-32 h-32"
       />
-      <h2 className="text-xl text-white font-semibold uppercase mb-12">
+      <h2 className="text-xl text-white font-semibold uppercase mb-10">
         {restaurant.restaurantName}
       </h2>
+      <div className="text-white flex mb-5">
+        {restaurant.delivery && (
+          <img
+            src={delivery}
+            alt="delivery"
+            className="w-8 h-8 m-4 filter invert"
+          />
+        )}
+        {restaurant.takeAway && (
+          <img
+            src={takeAway}
+            alt="takeAway"
+            className="w-8 h-8 m-4 filter invert"
+          />
+        )}
+        {restaurant.terrace && (
+          <img
+            src={terrace}
+            alt="terrace"
+            className="w-8 h-8 m-4 filter invert"
+          />
+        )}
+      </div>
       {restaurant.ownerId ? (
         <Button
           type="button"

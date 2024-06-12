@@ -1,6 +1,8 @@
 import logo from "../assets/logo-yellow.png";
 import { useAuthContext } from "../context/useAuthContext";
 import { Link, useMatch } from "react-router-dom";
+import { showAskAlert, showErrorAlert } from "../utils/alerts";
+import { fetchWebScrapping } from "../api/endpoints";
 
 export default function Navbar({ restaurantId }) {
   const { isAuthenticated } = useAuthContext();
@@ -12,6 +14,19 @@ export default function Navbar({ restaurantId }) {
   function handleLogout() {
     localStorage.clear();
     window.location.reload();
+  }
+
+  async function handleScrapping() {
+    const askAlert = await showAskAlert(
+      "¿Estás seguro de que quieres hacer scrapping?"
+    );
+    if (askAlert.isConfirmed) {
+      const status = await fetchWebScrapping();
+      if (status === 403)
+        await showErrorAlert(
+          "No tienes permisos para hacer scrapping, debes de reiniciar sesión."
+        );
+    }
   }
 
   if (!role && !isAuthenticated) {
@@ -38,6 +53,14 @@ export default function Navbar({ restaurantId }) {
   if (isAuthenticated) {
     buttons = (
       <div className="container text-base justify-end">
+        {role === "admin" ? (
+          <button
+            className="inline-flex items-center bg-green-button border-0 py-3 px-3 mx-4 focus:outline-none hover:bg-hover-button active:bg-active-button rounded text-base font-semibold md:mt-0"
+            onClick={handleScrapping}
+          >
+            Scrapping
+          </button>
+        ) : null}
         {role === "admin" || role === "owner" ? (
           <button className="inline-flex items-center bg-green-button border-0 py-3 px-3 mx-4 focus:outline-none hover:bg-hover-button active:bg-active-button rounded text-base font-semibold md:mt-0">
             <Link to="/dashboard">Dashboard</Link>

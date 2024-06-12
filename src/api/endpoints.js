@@ -341,3 +341,14 @@ export async function fetchGetRestaurantCount(restaurantId) {
   const data = await response.json();
   return data;
 }
+
+export async function fetchWebScrapping() {
+  const response = await fetch(`${API_URL}/scrapping`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+
+  return response.status;
+}
