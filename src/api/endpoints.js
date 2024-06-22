@@ -27,12 +27,15 @@ export async function fetchRegister(form) {
 }
 
 export async function fetchRestaurants() {
-  const response = await fetch(`${API_URL}/api/restaurants`, {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-    },
-  });
+  const response = await fetch(
+    `${API_URL}/api/restaurants/restaurantsWithoutOwner`,
+    {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }
+  );
 
   const data = await response.json();
   return data;
