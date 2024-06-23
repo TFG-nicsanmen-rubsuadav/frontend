@@ -221,7 +221,7 @@ export default function Menu({ restaurantId }) {
                   </div>
                 </div>
               ))}
-              {isAuthenticated && (
+              {isAuthenticated && role === "owner" && (
                 <div className="flex items-center" id="addDishButton">
                   <button
                     className="focus:outline-none"
