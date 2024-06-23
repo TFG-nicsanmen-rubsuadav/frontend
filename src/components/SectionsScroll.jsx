@@ -10,6 +10,8 @@ export default function SectionsScroll({ restaurantId }) {
   const [isSectionModalOpen, setIsSectionModalOpen] = useState(false);
   const { isAuthenticated } = useAuthContext();
 
+  const role = localStorage.getItem("role");
+
   function openSectionModal() {
     setIsSectionModalOpen(true);
   }
@@ -44,7 +46,7 @@ export default function SectionsScroll({ restaurantId }) {
               </div>
             )
         )}
-        {isAuthenticated && (
+        {isAuthenticated && role === "owner" && (
           <div className="flex items-center">
             <button
               id="addSectionButton"

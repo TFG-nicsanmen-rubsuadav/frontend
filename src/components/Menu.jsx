@@ -27,6 +27,8 @@ export default function Menu({ restaurantId }) {
   const [currentSectionId, setCurrentSectionId] = useState(null);
   const [currentDishId, setCurrentDishId] = useState(null);
 
+  const role = localStorage.getItem("role");
+
   // MODAL FUNCTIONS
   function openModal(sectionId, dishId) {
     setCurrentSectionId(sectionId);
@@ -123,7 +125,7 @@ export default function Menu({ restaurantId }) {
                     {section.description}
                   </span>
                 </div>
-                {isAuthenticated && (
+                {isAuthenticated && role === "owner" && (
                   <div className="flex flex-row space-x-5 mr-4 ml-3">
                     <button
                       onClick={() => openSectionModal(section.id)}
@@ -198,7 +200,7 @@ export default function Menu({ restaurantId }) {
                         </p>
                       </div>
                     )}
-                    {isAuthenticated && (
+                    {isAuthenticated && role === "owner" && (
                       <>
                         <button
                           id="editDishButton"
